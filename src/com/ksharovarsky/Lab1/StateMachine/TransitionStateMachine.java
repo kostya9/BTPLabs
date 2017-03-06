@@ -35,6 +35,7 @@ public class TransitionStateMachine implements StateMachineImplementation {
                 new Transition(MachineState.Q0, CharacterType.DIGIT, MachineState.Q4),
                 new Transition(MachineState.Q1, CharacterType.LETTER, MachineState.Q1),
                 new Transition(MachineState.Q1, CharacterType.UNDERSCORE, MachineState.Q2),
+                new Transition(MachineState.Q1, CharacterType.ENDWORD, MachineState.Q5),
                 new Transition(MachineState.Q2, CharacterType.LETTER, MachineState.Q3),
                 new Transition(MachineState.Q2, CharacterType.DIGIT, MachineState.Q4),
                 new Transition(MachineState.Q3, CharacterType.LETTER, MachineState.Q3),

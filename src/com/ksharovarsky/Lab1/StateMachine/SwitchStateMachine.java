@@ -48,7 +48,14 @@ public class SwitchStateMachine implements StateMachineImplementation {
     }
 
     private void changeStateQ1(CharacterType type) {
-        changeStateQ0(type);
+        if(type == CharacterType.LETTER)
+            state = MachineState.Q1;
+
+        if(type == CharacterType.UNDERSCORE)
+            state = MachineState.Q2;
+
+        if(type == CharacterType.ENDWORD)
+            state = MachineState.Q5;
     }
 
     private void changeStateQ2(CharacterType type) {
