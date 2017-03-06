@@ -1,8 +1,6 @@
 package com.ksharovarsky.Lab1;
 
 
-import com.sun.media.sound.InvalidFormatException;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,16 +10,16 @@ import java.nio.file.Path;
  * Created by kostya on 2/25/2017.
  */
 public abstract class FileMatch<TResult> {
-    private Path _filePath;
-    protected ExpressionCheck _check;
+    private Path filePath;
+    protected ExpressionCheck check;
 
     public FileMatch(Path filePath, ExpressionCheck check) {
-        _filePath = filePath;
-        _check = check;
+        this.filePath = filePath;
+        this.check = check;
     }
 
     public TResult[] findMatching() {
-        try (BufferedReader reader = Files.newBufferedReader(_filePath)){
+        try (BufferedReader reader = Files.newBufferedReader(filePath)){
             return findMatching(reader);
 
         }

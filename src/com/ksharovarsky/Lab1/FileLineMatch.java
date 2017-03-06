@@ -1,7 +1,5 @@
 package com.ksharovarsky.Lab1;
 
-import com.sun.media.sound.InvalidFormatException;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -33,7 +31,7 @@ public class FileLineMatch extends FileMatch<String> {
     }
 
     private void CheckLine(List<String> matches, String line) {
-        boolean isMatching = _check.isMatching(line);
+        boolean isMatching = check.isMatching(line);
         if(isMatching)
             matches.add(line);
     }

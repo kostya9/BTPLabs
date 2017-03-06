@@ -3,7 +3,6 @@ package com.ksharovarsky.Lab1;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.stream.Collectors;
 
 /**
  * Created by kostya on 2/25/2017.
@@ -24,7 +23,7 @@ public class FileTextMatch extends FileMatch<Integer> {
         {
             text.append(line).append("\n");
         }
-        return _check.matchPositions(text.toString());
+        return check.matchPositions(text.toString());
     }
 
     @Override

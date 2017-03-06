@@ -11,10 +11,10 @@ public class ExpressionCheck {
 
     public static final String DefaultRegexPattern = "(\\+[0-9]+[A-K]+)|(\\+[0-9]+[\\^&]+)";
 
-    private Pattern _pattern;
+    private Pattern pattern;
 
     public ExpressionCheck(Pattern pattern) {
-        _pattern = pattern;
+        this.pattern = pattern;
     }
 
     public ExpressionCheck(String regex) {
@@ -22,16 +22,16 @@ public class ExpressionCheck {
     }
 
     public String getRegexPattern() {
-        return _pattern.pattern();
+        return pattern.pattern();
     }
 
     public boolean isMatching(String word) {
-        Matcher match = _pattern.matcher(word);
+        Matcher match = pattern.matcher(word);
         return match.matches();
     }
 
     public Integer[] matchPositions(String text) {
-        Matcher match = _pattern.matcher(text);
+        Matcher match = pattern.matcher(text);
         List<Integer> positions = new ArrayList<Integer>();
 
         int index = 0;
