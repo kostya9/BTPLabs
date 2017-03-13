@@ -1,4 +1,4 @@
-package com.ksharovarsky.Lab1;
+package com.ksharovarsky.lab1;
 
 /**
  * Created by kostya on 2/25/2017.

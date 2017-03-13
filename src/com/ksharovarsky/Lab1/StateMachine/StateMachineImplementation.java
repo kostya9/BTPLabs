@@ -1,9 +1,13 @@
-package com.ksharovarsky.Lab1.StateMachine;
+package com.ksharovarsky.lab1.stateMachine;
 
 /**
  * Created by kostya on 3/7/2017.
  */
-public interface StateMachineImplementation {
-    MachineState nextState(CharacterType type);
-    void reset();
+public abstract class StateMachineImplementation {
+    public StateMachineImplementation() {
+        reset();
+    }
+
+    public abstract MachineState nextState(CharacterType type);
+    public abstract void reset();
 }

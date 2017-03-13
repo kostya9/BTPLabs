@@ -1,4 +1,4 @@
-package com.ksharovarsky.Lab1;
+package com.ksharovarsky.lab1;
 
 import java.util.ArrayList;
 import java.util.List;

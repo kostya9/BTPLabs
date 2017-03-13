@@ -1,14 +1,15 @@
-package com.ksharovarsky.Lab1.StateMachine;
+package com.ksharovarsky.lab1.stateMachine.switchImplementation;
+
+import com.ksharovarsky.lab1.stateMachine.CharacterType;
+import com.ksharovarsky.lab1.stateMachine.MachineState;
+import com.ksharovarsky.lab1.stateMachine.StateMachineImplementation;
+import com.ksharovarsky.lab1.stateMachine.stateImplementation.Q4;
 
 /**
  * Created by kostya on 3/7/2017.
  */
-public class SwitchStateMachine implements StateMachineImplementation {
+public class SwitchStateMachine extends StateMachineImplementation {
     private MachineState state;
-
-    public SwitchStateMachine() {
-        reset();
-    }
 
     @Override
     public MachineState nextState(CharacterType type) {
@@ -53,6 +54,9 @@ public class SwitchStateMachine implements StateMachineImplementation {
 
         if(type == CharacterType.UNDERSCORE)
             state = MachineState.Q2;
+
+        if(type == CharacterType.DIGIT)
+            state = MachineState.Q4;
 
         if(type == CharacterType.ENDWORD)
             state = MachineState.Q5;

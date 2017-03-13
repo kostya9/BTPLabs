@@ -1,4 +1,4 @@
-package com.ksharovarsky.Lab1.StateMachine;
+package com.ksharovarsky.lab1.stateMachine;
 
 /**
  * Created by kostya on 3/7/2017.

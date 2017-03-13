@@ -1,22 +1,21 @@
-package com.ksharovarsky.Lab1.StateMachine;
+package com.ksharovarsky.lab1.stateMachine.transitionImplementation;
 
-import java.util.ArrayList;
+import com.ksharovarsky.lab1.stateMachine.CharacterType;
+import com.ksharovarsky.lab1.stateMachine.MachineState;
+import com.ksharovarsky.lab1.stateMachine.StateMachineImplementation;
+import com.ksharovarsky.lab1.stateMachine.stateImplementation.Q1;
+import com.ksharovarsky.lab1.stateMachine.stateImplementation.Q4;
+
 import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * Created by kostya on 3/7/2017.
  */
-public class TransitionStateMachine implements StateMachineImplementation {
+public class TransitionStateMachine extends StateMachineImplementation {
 
     private Transition[] transitions;
     private MachineState state;
 
-    public TransitionStateMachine() {
-        reset();
-    }
     @Override
     public MachineState nextState(CharacterType type) {
         Transition transition = Arrays.stream(transitions)
@@ -35,6 +34,7 @@ public class TransitionStateMachine implements StateMachineImplementation {
                 new Transition(MachineState.Q0, CharacterType.DIGIT, MachineState.Q4),
                 new Transition(MachineState.Q1, CharacterType.LETTER, MachineState.Q1),
                 new Transition(MachineState.Q1, CharacterType.UNDERSCORE, MachineState.Q2),
+                new Transition(MachineState.Q1, CharacterType.DIGIT, MachineState.Q4),
                 new Transition(MachineState.Q1, CharacterType.ENDWORD, MachineState.Q5),
                 new Transition(MachineState.Q2, CharacterType.LETTER, MachineState.Q3),
                 new Transition(MachineState.Q2, CharacterType.DIGIT, MachineState.Q4),

@@ -1,4 +1,4 @@
-package com.ksharovarsky.Lab1.StateMachine;
+package com.ksharovarsky.lab1.stateMachine;
 
 /**
  * Created by kostya on 3/6/2017.
@@ -6,7 +6,7 @@ package com.ksharovarsky.Lab1.StateMachine;
 public class FiniteStateMachine {
     private StateMachineImplementation implementation;
 
-    protected FiniteStateMachine(StateMachineImplementation implementation) {
+    public FiniteStateMachine(StateMachineImplementation implementation) {
         this.implementation = implementation;
     }
 
@@ -20,7 +20,7 @@ public class FiniteStateMachine {
         MachineState state;
 
         for(char c : input.toCharArray()) {
-            CharacterType type = getCharacterType(c);
+            CharacterType type = CharacterType.fromCharacter(c);
             state = implementation.nextState(type);
 
             if(state == MachineState.ERROR)
@@ -32,15 +32,8 @@ public class FiniteStateMachine {
         return state;
     }
 
-    private CharacterType getCharacterType(char c) {
-        if(Character.isUpperCase(c))
-            return CharacterType.LETTER;
-        if(Character.isDigit(c))
-            return CharacterType.DIGIT;
-        if(c == '_')
-            return CharacterType.UNDERSCORE;
-
-        return CharacterType.ANY;
+    public void reset() {
+        implementation.reset();
     }
 
 }
