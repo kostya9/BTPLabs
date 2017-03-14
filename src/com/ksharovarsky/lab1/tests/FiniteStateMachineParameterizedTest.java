@@ -28,8 +28,10 @@ public class FiniteStateMachineParameterizedTest {
     @Parameterized.Parameters(name = "{index} : Result : {1}, Test : {0}")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-                {"ABCDE_ABCDE", true} , {"ABCDEEEE", true}, {"ABCDE_1234", true}, {"ABCDE1234", true}, {"1234", true}, {"_1234", true}, {"_ABCDE", true},
-                {"ABCDE_1234ABC", false}, {"ABCDE__1234", false}, {"ABCDEabc", false}, {"ABCDE_abcde", false}, {"ABCDE_", false}, {"ABCDE_&&&", false}, {"_", false}
+                {"ABCDE_ABCDE", true} , {"ABCDEEEE", true}, {"ABCDE_1234", true},
+                {"ABCDE1234", true},{"1234", true}, {"_1234", true}, {"_ABCDE", true},
+                {"ABCDE_1234ABC", false}, {"ABCDE__1234", false}, {"ABCDEabc", false}, {"ABCDE_abcde", false},
+                {"ABCDE_", false}, {"ABCDE_&&&", false}, {"_", false}, {"", false}
         });
     }
 
@@ -44,18 +46,6 @@ public class FiniteStateMachineParameterizedTest {
         for (StateMachineImplementation implementation : implementations) {
             FiniteStateMachine machine = new FiniteStateMachine(implementation);
             assertEquals(machine.scanString(testString), expected);
-        }
-    }
-
-    @Test
-    public void reset() {
-        StateMachineImplementation[] implementations = new StateMachineImplementation[] {new SwitchStateMachine(), new TransitionStateMachine(), new StatePatternStateMachine()};
-        for (StateMachineImplementation implementation : implementations) {
-            FiniteStateMachine machine = new FiniteStateMachine(implementation);
-            boolean value = machine.scanString(testString);
-            machine.reset();
-            boolean afterResetValue = machine.scanString(testString);
-            assertEquals(value, afterResetValue);
         }
     }
 }

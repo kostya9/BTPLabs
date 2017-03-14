@@ -32,35 +32,25 @@ import static org.junit.Assert.assertEquals;
 public class FiniteStateMachineTheoriesTest{
 
     @DataPoints
-    public static Object[][] input = {{"ABCDE_ABCDE", true} , {"ABCDEEEE", true}, {"ABCDE_1234", true}, {"ABCDE1234", true}, {"1234", true}, {"_1234", true}, {"_ABCDE", true},
-    {"ABCDE_1234ABC", false}, {"ABCDE__1234", false}, {"ABCDEabc", false}, {"ABCDE_abcde", false}, {"ABCDE_", false}, {"ABCDE_&&&", false}, {"_", false}};
+    public static Object[][] input = {
+            {"ABCDE_ABCDE", true} , {"ABCDEEEE", true}, {"ABCDE_1234", true},
+            {"ABCDE1234", true}, {"1234", true}, {"_1234", true}, {"_ABCDE", true},
+            {"ABCDE_1234ABC", false}, {"ABCDE__1234", false}, {"ABCDEabc", false}, {"ABCDE_abcde", false},
+            {"ABCDE_", false}, {"ABCDE_&&&", false}, {"_", false}, {"", false}};
 
     @DataPoints
-    public static String[] testStrings = {"ABCDE_ABCDE", "123", "___", "ABCDE_", "ABCDEEEE"};
+    public static StateMachineImplementation[] implementations = new StateMachineImplementation[] {
+        new StatePatternStateMachine(),
+        new SwitchStateMachine(),
+        new TransitionStateMachine()
+    };
 
     @Theory
-    @Test
-    public void scanString(final Object... testData){
-        StateMachineImplementation[] implementations = new StateMachineImplementation[] {new SwitchStateMachine(), new TransitionStateMachine(), new StatePatternStateMachine()};
-        for (StateMachineImplementation implementation : implementations) {
-            String testString = (String) testData[0];
-            boolean expected = (boolean) testData[1];
+    public void scanString(StateMachineImplementation implementation, final Object... testData){
+        String testString = (String) testData[0];
+        boolean expected = (boolean) testData[1];
 
-            FiniteStateMachine machine = new FiniteStateMachine(implementation);
-            assertEquals(machine.scanString(testString), expected);
-        }
-    }
-
-    @Theory
-    @Test
-    public void reset(String testString) {
-        StateMachineImplementation[] implementations = new StateMachineImplementation[] {new SwitchStateMachine(), new TransitionStateMachine(), new StatePatternStateMachine()};
-        for (StateMachineImplementation implementation : implementations) {
-            FiniteStateMachine machine = new FiniteStateMachine(implementation);
-            boolean value = machine.scanString(testString);
-            machine.reset();
-            boolean afterResetValue = machine.scanString(testString);
-            assertEquals(value, afterResetValue);
-        }
+        FiniteStateMachine machine = new FiniteStateMachine(implementation);
+        assertEquals(machine.scanString(testString), expected);
     }
 }

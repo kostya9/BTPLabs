@@ -38,16 +38,14 @@ public class Main {
     private static void testMachines(String test) {
         System.out.println("Switch");
         testMachine(switchMachine, test);
-        switchMachine.reset();
 
         System.out.println("Transition");
         testMachine(transitionMachine, test);
-        transitionMachine.reset();
 
         System.out.println("State");
         testMachine(statePatternMachine, test);
-        statePatternMachine.reset();
     }
+
     private static void testMachine(FiniteStateMachine machine, String test) {
         System.out.println(String.format("Input : %s, Output: %b", test, machine.scanString(test)));
     }
