@@ -10,6 +10,7 @@ import org.junit.experimental.theories.Theories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -25,7 +26,7 @@ public class FiniteStateMachineParameterizedTest {
     private final boolean expected;
 
     @Parameterized.Parameters(name = "{index} : Result : {1}, Test : {0}")
-    public static Collection<Object[]> date() {
+    public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
                 {"ABCDE_ABCDE", true} , {"ABCDEEEE", true}, {"ABCDE_1234", true}, {"ABCDE1234", true}, {"1234", true}, {"_1234", true}, {"_ABCDE", true},
                 {"ABCDE_1234ABC", false}, {"ABCDE__1234", false}, {"ABCDEabc", false}, {"ABCDE_abcde", false}, {"ABCDE_", false}, {"ABCDE_&&&", false}, {"_", false}
@@ -33,41 +34,28 @@ public class FiniteStateMachineParameterizedTest {
     }
 
     public FiniteStateMachineParameterizedTest(String testString, boolean expected) {
-
         this.testString = testString;
         this.expected = expected;
     }
 
     @Test
     public void scanString(){
-        FiniteStateMachine transitionMachine = new FiniteStateMachine(new TransitionStateMachine());
-        FiniteStateMachine switchMachine = new FiniteStateMachine(new SwitchStateMachine());
-        FiniteStateMachine stateMachine = new FiniteStateMachine(new StatePatternStateMachine());
-        assertEquals(transitionMachine.scanString(testString), expected);
-        assertEquals(switchMachine.scanString(testString), expected);
-        assertEquals(stateMachine.scanString(testString), expected);
+        StateMachineImplementation[] implementations = new StateMachineImplementation[] {new SwitchStateMachine(), new TransitionStateMachine(), new StatePatternStateMachine()};
+        for (StateMachineImplementation implementation : implementations) {
+            FiniteStateMachine machine = new FiniteStateMachine(implementation);
+            assertEquals(machine.scanString(testString), expected);
+        }
     }
 
     @Test
     public void reset() {
-        FiniteStateMachine transitionMachine = new FiniteStateMachine(new TransitionStateMachine());
-        FiniteStateMachine switchMachine = new FiniteStateMachine(new SwitchStateMachine());
-        FiniteStateMachine stateMachine = new FiniteStateMachine(new StatePatternStateMachine());
-
-        boolean valueTransition = transitionMachine.scanString(testString);
-        boolean valueSwitch = switchMachine.scanString(testString);
-        boolean valueState = stateMachine.scanString(testString);
-
-        transitionMachine.reset();
-        switchMachine.reset();
-        stateMachine.reset();
-
-        boolean afterResetValueTransition = transitionMachine.scanString(testString);
-        boolean afterResetValueSwitch = switchMachine.scanString(testString);
-        boolean afterResetValueState = stateMachine.scanString(testString);
-
-        assertEquals(valueTransition, afterResetValueTransition);
-        assertEquals(valueSwitch, afterResetValueSwitch);
-        assertEquals(valueState, afterResetValueState);
+        StateMachineImplementation[] implementations = new StateMachineImplementation[] {new SwitchStateMachine(), new TransitionStateMachine(), new StatePatternStateMachine()};
+        for (StateMachineImplementation implementation : implementations) {
+            FiniteStateMachine machine = new FiniteStateMachine(implementation);
+            boolean value = machine.scanString(testString);
+            machine.reset();
+            boolean afterResetValue = machine.scanString(testString);
+            assertEquals(value, afterResetValue);
+        }
     }
 }
