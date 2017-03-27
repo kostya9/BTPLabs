@@ -11,8 +11,8 @@ public class FiniteStateMachine {
     }
 
     public boolean scanString(String input) {
+        reset();
         MachineState state = getFinalMachineState(input);
-
         return state == MachineState.Q5;
     }
 
@@ -32,7 +32,7 @@ public class FiniteStateMachine {
         return state;
     }
 
-    public void reset() {
+    private void reset() {
         implementation.reset();
     }
 
