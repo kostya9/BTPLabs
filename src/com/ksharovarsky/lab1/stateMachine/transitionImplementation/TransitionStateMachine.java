@@ -3,8 +3,6 @@ package com.ksharovarsky.lab1.stateMachine.transitionImplementation;
 import com.ksharovarsky.lab1.stateMachine.CharacterType;
 import com.ksharovarsky.lab1.stateMachine.MachineState;
 import com.ksharovarsky.lab1.stateMachine.StateMachineImplementation;
-import com.ksharovarsky.lab1.stateMachine.stateImplementation.Q1;
-import com.ksharovarsky.lab1.stateMachine.stateImplementation.Q4;
 
 import java.util.Arrays;
 

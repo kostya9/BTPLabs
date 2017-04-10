@@ -3,7 +3,6 @@ package com.ksharovarsky.lab1.stateMachine.switchImplementation;
 import com.ksharovarsky.lab1.stateMachine.CharacterType;
 import com.ksharovarsky.lab1.stateMachine.MachineState;
 import com.ksharovarsky.lab1.stateMachine.StateMachineImplementation;
-import com.ksharovarsky.lab1.stateMachine.stateImplementation.Q4;
 
 /**
  * Created by kostya on 3/7/2017.

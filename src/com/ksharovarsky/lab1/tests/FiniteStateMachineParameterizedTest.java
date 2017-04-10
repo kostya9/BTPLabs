@@ -6,11 +6,9 @@ import com.ksharovarsky.lab1.stateMachine.stateImplementation.StatePatternStateM
 import com.ksharovarsky.lab1.stateMachine.switchImplementation.SwitchStateMachine;
 import com.ksharovarsky.lab1.stateMachine.transitionImplementation.TransitionStateMachine;
 import org.junit.Test;
-import org.junit.experimental.theories.Theories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 

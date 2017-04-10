@@ -5,22 +5,8 @@ import com.ksharovarsky.lab1.stateMachine.StateMachineImplementation;
 import com.ksharovarsky.lab1.stateMachine.stateImplementation.StatePatternStateMachine;
 import com.ksharovarsky.lab1.stateMachine.switchImplementation.SwitchStateMachine;
 import com.ksharovarsky.lab1.stateMachine.transitionImplementation.TransitionStateMachine;
-import junit.framework.TestCase;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 import org.junit.experimental.theories.*;
-import org.junit.experimental.theories.suppliers.TestedOn;
-import org.junit.rules.ExternalResource;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 

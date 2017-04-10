@@ -1,9 +1,5 @@
 grammar MatrixVectorExpressions;
 
-@header {
-    package com.ksharovarsky.lab2
-}
-
 start_rule: (expression end_expression)* expression?;
 
 end_expression: ';';
@@ -33,15 +29,13 @@ binary_high_operator: '*' | '/';
 function: NAME;
 variable: NAME;
 
-matrix: '[' vector_sequence ']';
-vector: '[' number_sequence ']';
-value : NUMBER | vector | matrix;
+vector: '[' expression_sequence ']';
+value : NUMBER | vector;
 
-vector_sequence: vector (',' vector)*;
-number_sequence : NUMBER (',' NUMBER)*;
+expression_sequence : expression (',' expression)*;
 
 NAME: [a-zA-Z]+;
-NUMBER: DIGIT+ | DIGIT+ '.' DIGIT+ ;
+NUMBER: (DIGIT+ | DIGIT+ '.' DIGIT+) ;
 DIGIT: [0-9];
 
 WHITESPACE : ( '\t' | ' ' | '\r' | '\n'| '\u000C' )+ -> skip ;
