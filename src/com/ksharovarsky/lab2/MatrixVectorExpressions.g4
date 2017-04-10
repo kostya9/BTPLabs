@@ -21,6 +21,10 @@ expression:
     | variable
     | value;
 
+value : NUMBER | vector;
+vector: '[' expression_sequence ']';
+expression_sequence : expression (',' expression)*;
+
 operator_unary_after: '^1' | '^T';
 operator_unary_before: '+' | '-';
 binary_low_operator: '+' | '-';
@@ -28,11 +32,6 @@ binary_high_operator: '*' | '/';
 
 function: NAME;
 variable: NAME;
-
-vector: '[' expression_sequence ']';
-value : NUMBER | vector;
-
-expression_sequence : expression (',' expression)*;
 
 NAME: [a-zA-Z]+;
 NUMBER: (DIGIT+ | DIGIT+ '.' DIGIT+) ;
