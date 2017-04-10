@@ -4,14 +4,17 @@ grammar MatrixVectorExpressions;
     package com.ksharovarsky.lab2
 }
 
-start_rule: (assignment | expression)* EOF;
+start_rule: (expression end_expression)* expression;
+
+end_expression: ';' | EOF;
 
 assignment: NAME '=' expression;
-
 expression_high: '(' expression ')';
 
-expression: expression_high
-    | unary_function expression_high
+expression:
+    assignment
+    | expression_high
+    | function expression_high
     | operator_unary_before expression
     | expression operator_unary_after
     | expression binary_high_operator expression
@@ -23,7 +26,7 @@ operator_unary_before: '+' | '-';
 binary_low_operator: '+' | '-';
 binary_high_operator: '*' | '/';
 
-unary_function: 'det' | 'rank';
+function: NAME;
 
 matrix: '[' vector_sequence ']';
 vector: '[' number_sequence ']';
@@ -32,7 +35,7 @@ value : NUMBER | vector | matrix;
 vector_sequence: vector (',' vector)*;
 number_sequence : NUMBER (',' NUMBER)*;
 
-NAME: [a-zA-Z];
+NAME: [a-zA-Z]+;
 NUMBER: DIGIT+ | DIGIT+ '.' DIGIT+ ;
 DIGIT: [0-9];
 
