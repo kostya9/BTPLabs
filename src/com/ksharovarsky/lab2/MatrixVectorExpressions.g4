@@ -4,9 +4,9 @@ grammar MatrixVectorExpressions;
     package com.ksharovarsky.lab2
 }
 
-start_rule: (expression end_expression)* expression;
+start_rule: (expression end_expression)* expression?;
 
-end_expression: ';' | EOF;
+end_expression: ';';
 
 assignment: NAME '=' expression;
 
