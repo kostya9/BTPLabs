@@ -1,5 +1,7 @@
 package com.ksharovarsky.lab2.calculation;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 /**
  * Created by kostya on 4/10/2017.
  */
@@ -14,4 +16,61 @@ public class Number extends Expression {
     public String display() {
         return String.format("%.2f", _value);
     }
+
+    public Expression plus(Expression e) {
+        if(e instanceof Number)
+        {
+            Number n = (Number)e;
+            return new Number(_value + n._value);
+        }
+        throw new NotImplementedException();
+    }
+
+    public Expression minus(Expression e) {
+        if(e instanceof Number)
+        {
+            Number n = (Number)e;
+            return new Number(_value - n._value);
+        }
+        throw new NotImplementedException();
+    }
+
+    public Expression multiply(Expression e) {
+        if(e instanceof Number)
+        {
+            Number n = (Number)e;
+            return new Number(_value * n._value);
+        }
+        throw new NotImplementedException();
+    }
+
+    public Expression divide(Expression e) {
+        if(e instanceof Number)
+        {
+            Number n = (Number)e;
+            return new Number(_value * n._value);
+        }
+        throw new NotImplementedException();
+    }
+
+    public Expression transpose() {
+        return this;
+    }
+
+    public Expression inverse() {
+        return new Number(1 / _value);
+    }
+
+    public Expression rank() {
+        return new Number(1);
+    }
+
+    public Expression determinant() {
+        return this;
+    };
+
+    public Expression negative() {
+
+        return new Number(- _value);
+    };
 }

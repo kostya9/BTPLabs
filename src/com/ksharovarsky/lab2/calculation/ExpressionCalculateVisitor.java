@@ -54,5 +54,57 @@ public class ExpressionCalculateVisitor extends MatrixVectorExpressionsBaseVisit
     @Override public Expression visitVariable(MatrixVectorExpressionsParser.VariableContext ctx) {
         return _memory.get(ctx.getText());
     }
+    @Override public Expression visitFunctionE(MatrixVectorExpressionsParser.FunctionEContext ctx) {
+        Expression e = visit(ctx.expression_high().expression());
+
+        String name = ctx.function().NAME().getText();
+        if(name.equals("rank"))
+            return e.rank();
+        if(name.equals("det"))
+            return e.determinant();
+
+        throw new IllegalArgumentException();
+
+    }
+
+    @Override public Expression visitBinaryE(MatrixVectorExpressionsParser.BinaryEContext ctx) {
+        Expression left = visit(ctx.expression().get(0));
+        Expression right = visit(ctx.expression().get(1));
+
+        if(ctx.binary_high_operator() != null) {
+            if(ctx.binary_high_operator().getText().equals("*"))
+                return left.multiply(right);
+            else if(ctx.binary_high_operator().getText().equals("/"))
+                return left.divide(right);
+        }
+        else {
+            if(ctx.binary_low_operator().getText().equals("+"))
+                return left.plus(right);
+            else if(ctx.binary_low_operator().getText().equals("-"))
+                return left.minus(right);
+        }
+
+        throw new IllegalArgumentException();
+    }
+
+    @Override public Expression visitUnaryBeforeE(MatrixVectorExpressionsParser.UnaryBeforeEContext ctx) {
+        Expression e = visit(ctx.expression());
+        if(ctx.operator_unary_before().getText().equals("+"))
+            return e;
+        if(ctx.operator_unary_before().getText().equals("-"))
+            return e.negative();
+
+        throw new IllegalArgumentException();
+    }
+
+    @Override public Expression visitUnaryAfterE(MatrixVectorExpressionsParser.UnaryAfterEContext ctx) {
+        Expression e = visit(ctx.expression());
+        if(ctx.operator_unary_after().getText().equals("^1"))
+            return e.inverse();
+        if(ctx.operator_unary_after().getText().equals("^T"))
+            return e.transpose();
+
+        throw new IllegalArgumentException();
+    }
 
 }

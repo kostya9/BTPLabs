@@ -3,6 +3,7 @@ package com.ksharovarsky.lab2.calculation;
 import com.ksharovarsky.lab2.MatrixVectorExpressionsLexer;
 import com.ksharovarsky.lab2.MatrixVectorExpressionsParser;
 import org.antlr.v4.runtime.*;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class ExpressionCalculator {
 
                 @Override
                 public void reportError(Parser parser, RecognitionException e) {
-                    throw new RuntimeException("Incorrect input.");
+                    throw new RuntimeException("Incorrect input." + e.getMessage());
                 }
             });
 
@@ -42,6 +43,9 @@ public class ExpressionCalculator {
             Expression e = visitor.visitStart_rule(parser.start_rule());
 
             return e.display();
+        }
+        catch (NotImplementedException e){
+            return "Sorry, this operation was not implemented";
         }
         catch(Exception e) {
             return "Incorrect input. Try again.";

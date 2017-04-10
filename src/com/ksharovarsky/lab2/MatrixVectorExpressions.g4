@@ -43,4 +43,4 @@ NAME: [a-zA-Z]+;
 NUMBER: '-'?(DIGIT+ | DIGIT+ '.' DIGIT+) ;
 DIGIT: [0-9];
 
-WHITESPACE : ( '\t' | ' ' | '\r' | '\n'| '\u000C' )+ -> skip ;
+WHITESPACE : ( '\t' | ' ' | '\r' | '\n' )+ -> skip ;

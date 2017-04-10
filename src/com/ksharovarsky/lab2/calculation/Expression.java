@@ -22,13 +22,25 @@ public abstract class Expression {
         throw new NotImplementedException();
     }
 
-    public Expression transpose(Expression e) {
+    public Expression transpose() {
         throw new NotImplementedException();
     }
 
-    public Expression inverse(Expression e) {
+    public Expression inverse() {
         throw new NotImplementedException();
     }
+
+    public Expression rank() {
+        throw new NotImplementedException();
+    }
+
+    public Expression determinant() {
+        throw new NotImplementedException();
+    };
+
+    public Expression negative() {
+        throw new NotImplementedException();
+    };
 
     public abstract String display();
 }
