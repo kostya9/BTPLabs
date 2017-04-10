@@ -10,25 +10,25 @@ expression_high: '(' expression ')';
 absolute: '|' expression '|';
 
 expression:
-    assignment
-    | expression_high
-    | absolute
-    | function expression_high
-    | operator_unary_before expression
-    | expression operator_unary_after
-    | expression binary_high_operator expression
-    | expression binary_low_operator expression
-    | variable
-    | value;
+    assignment #AssignmentE
+    | expression_high #HighOrderE
+    | absolute # AbsoluteE
+    | function expression_high #FunctionE
+    | operator_unary_before expression #UnaryBeforeE
+    | expression operator_unary_after #UnaryAfterE
+    | expression binary_high_operator expression #BinaryE
+    | expression binary_low_operator expression #BinaryE
+    | variable #VariableE
+    | vector #VectorE
+    | NUMBER #NumberE;
 
-value : NUMBER | vector;
 vector: '[' expression_sequence ']';
 expression_sequence : expression (',' expression)*;
 
-operator_unary_after: '^1' | '^T';
-operator_unary_before: '+' | '-';
-binary_low_operator: '+' | '-';
-binary_high_operator: '*' | '/';
+operator_unary_after: '^1' #Inverse | '^T'  # Transpose;
+operator_unary_before: '+' #UnaryPlus | '-' #UnaryMinus;
+binary_low_operator: '+' #BinaryPlus | '-' #BinaryMinus;
+binary_high_operator: '*' #Multiply | '/' #Divide;
 
 function: NAME;
 variable: NAME;
