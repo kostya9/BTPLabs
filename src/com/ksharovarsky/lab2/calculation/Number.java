@@ -1,6 +1,7 @@
 package com.ksharovarsky.lab2.calculation;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import sun.reflect.generics.tree.DoubleSignature;
 
 /**
  * Created by kostya on 4/10/2017.
@@ -48,7 +49,7 @@ public class Number extends Expression {
         if(e instanceof Number)
         {
             Number n = (Number)e;
-            return new Number(_value * n._value);
+            return new Number(_value / n._value);
         }
         throw new NotImplementedException();
     }
@@ -73,4 +74,21 @@ public class Number extends Expression {
 
         return new Number(- _value);
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Number number = (Number) o;
+
+        return Double.compare(_value, number._value) == 0;
+
+    }
+
+    @Override
+    public int hashCode() {
+        long temp = Double.doubleToLongBits(_value);
+        return (int) (temp ^ (temp >>> 32));
+    }
 }

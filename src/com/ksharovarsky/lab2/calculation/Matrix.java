@@ -1,5 +1,6 @@
 package com.ksharovarsky.lab2.calculation;
 
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
@@ -25,5 +26,21 @@ public class Matrix extends Expression{
         }
 
         return output;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Matrix matrix = (Matrix) o;
+
+        return Arrays.deepEquals(_vectors, matrix._vectors);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(_vectors);
     }
 }
