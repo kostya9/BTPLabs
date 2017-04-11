@@ -56,6 +56,14 @@ public class TestParse {
         assertEquals(e, fromVectors(v, v, v));
     }
 
+    @Test
+    public void testHighOrder() {
+        Expression e = _calculator.calculate("[[1, (2 + 2) * 2], [1, 2], [1, 2]]");
+
+        Vector v = fromNumbers(1, 2);
+        assertEquals(e, fromVectors(fromNumbers(1, 8), v, v));
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void testVectorInconsistent() {
         Expression e = _calculator.calculate("[1, 2, [3]]");
