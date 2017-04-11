@@ -28,8 +28,11 @@ public class ExpressionCalculateVisitor extends MatrixVectorExpressionsBaseVisit
     }
 
     @Override public Expression visitVector(MatrixVectorExpressionsParser.VectorContext ctx) {
-        List<TerminalNode> numbersNodes = ctx.number_sequence().NUMBER();
-        List<Number> list = numbersNodes.stream().map(this::fromNumberNodeToNumber).collect(Collectors.toList());
+        List<MatrixVectorExpressionsParser.ExpressionContext> expressionsNodes = ctx.expression_sequence().expression();
+        List<Expression> expressions = expressionsNodes.stream().map(this::visit).collect(Collectors.toList());
+        if(!expressions.stream().allMatch(e -> e instanceof Number))
+            throw new IllegalArgumentException("Only numeric vectors are supported");
+        List<Number> list = expressions.stream().map(e -> (Number)e).collect(Collectors.toList());
         Number[] numbers = list.toArray(new Number[list.size()]);
         return new Vector(numbers);
     }
