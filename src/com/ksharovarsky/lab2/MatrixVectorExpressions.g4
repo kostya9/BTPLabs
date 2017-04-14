@@ -27,9 +27,9 @@ expression: expression_high #HighOrderE
                 | NUMBER #NumberE;
 
 matrix: '[' vector_sequence ']';
-vector: '[' number_sequence ']';
+vector: '[' expression_sequence ']';
 vector_sequence : vector (',' vector)*;
-number_sequence : NUMBER (',' NUMBER)*;
+expression_sequence : expression (',' expression)*;
 
 operator_unary_after: '^1' #Inverse | '^T'  # Transpose;
 operator_unary_before: '+' #UnaryPlus | '-' #UnaryMinus;

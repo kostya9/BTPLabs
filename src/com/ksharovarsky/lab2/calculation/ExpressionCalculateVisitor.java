@@ -21,15 +21,18 @@ public class ExpressionCalculateVisitor extends MatrixVectorExpressionsBaseVisit
 
     private Number fromNumberNodeToNumber(TerminalNode n) {
         return new Number(Double.parseDouble(n.getText()));
-    }
+}
 
     @Override public Expression visitNumberE(MatrixVectorExpressionsParser.NumberEContext ctx) {
         return fromNumberNodeToNumber(ctx.NUMBER());
     }
 
     @Override public Expression visitVector(MatrixVectorExpressionsParser.VectorContext ctx) {
-        List<TerminalNode> numbersNodes = ctx.number_sequence().NUMBER();
-        List<Number> list = numbersNodes.stream().map(this::fromNumberNodeToNumber).collect(Collectors.toList());
+        List<MatrixVectorExpressionsParser.ExpressionContext> expressionsNodes = ctx.expression_sequence().expression();
+        List<Expression> expressions = expressionsNodes.stream().map(this::visit).collect(Collectors.toList());
+        if(!expressions.stream().allMatch(e -> e instanceof Number))
+            throw new IllegalArgumentException("Only numeric vectors are supported");
+        List<Number> list = expressions.stream().map(e -> (Number)e).collect(Collectors.toList());
         Number[] numbers = list.toArray(new Number[list.size()]);
         return new Vector(numbers);
     }
@@ -63,7 +66,7 @@ public class ExpressionCalculateVisitor extends MatrixVectorExpressionsBaseVisit
         if(name.equals("det"))
             return e.determinant();
 
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("Unsupported function.");
 
     }
 
@@ -84,7 +87,7 @@ public class ExpressionCalculateVisitor extends MatrixVectorExpressionsBaseVisit
                 return left.minus(right);
         }
 
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("Incorrect input.");
     }
 
     @Override public Expression visitUnaryBeforeE(MatrixVectorExpressionsParser.UnaryBeforeEContext ctx) {
@@ -94,7 +97,7 @@ public class ExpressionCalculateVisitor extends MatrixVectorExpressionsBaseVisit
         if(ctx.operator_unary_before().getText().equals("-"))
             return e.negative();
 
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("Incorrect input.");
     }
 
     @Override public Expression visitUnaryAfterE(MatrixVectorExpressionsParser.UnaryAfterEContext ctx) {
@@ -104,7 +107,12 @@ public class ExpressionCalculateVisitor extends MatrixVectorExpressionsBaseVisit
         if(ctx.operator_unary_after().getText().equals("^T"))
             return e.transpose();
 
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("Incorrect input.");
     }
+
+    @Override public Expression visitExpression_high(MatrixVectorExpressionsParser.Expression_highContext ctx) {
+        return visit(ctx.expression());
+    }
+
 
 }
