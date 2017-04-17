@@ -119,8 +119,15 @@ public class Matrix extends Expression{
     }
     public Expression determinant() {
         Jama.Matrix jamaMatrix = toJamaMatrix(this);
+        double result;
+        try {
+            result = jamaMatrix.det();
+        }
+        catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException("The matrix is not square.");
+        }
 
-        return new Number(jamaMatrix.det());
+        return new Number(result);
     };
 
     public Expression negative() {

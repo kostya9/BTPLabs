@@ -79,6 +79,8 @@ public class ExpressionCalculateVisitor extends MatrixVectorExpressionsBaseVisit
                 return left.multiply(right);
             else if(ctx.binary_high_operator().getText().equals("/"))
                 return left.divide(right);
+            else if(ctx.binary_high_operator().getText().equals("=="))
+                return new Number(left.equals(right) ? 1 : 0);
         }
         else {
             if(ctx.binary_low_operator().getText().equals("+"))

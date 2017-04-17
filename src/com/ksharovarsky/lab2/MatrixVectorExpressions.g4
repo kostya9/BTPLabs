@@ -34,7 +34,7 @@ expression_sequence : expression (',' expression)*;
 operator_unary_after: '^1' #Inverse | '^T'  # Transpose;
 operator_unary_before: '+' #UnaryPlus | '-' #UnaryMinus;
 binary_low_operator: '+' #BinaryPlus | '-' #BinaryMinus;
-binary_high_operator: '*' #Multiply | '/' #Divide;
+binary_high_operator: '*' #Multiply | '/' #Divide | '==' #Equals;
 
 function: NAME;
 variable: NAME;

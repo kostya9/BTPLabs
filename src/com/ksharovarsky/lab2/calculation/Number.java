@@ -52,6 +52,14 @@ public class Number extends Expression {
     public Expression beMultiplied(Number n) {
         return this.multiply(n);
     }
+
+    @Override
+    public Expression divide(Number n) {
+        return new Number(_value / n._value);
+    }
+
+    @Override
+    public Expression beDivided(Number n) { return n.divide(this); }
     //endregion
 
     //region Vector
@@ -69,11 +77,6 @@ public class Number extends Expression {
     @Override
     public Expression beMultiplied(Matrix m) {
         return m.multiply(this);
-    }
-
-    @Override
-    public Expression beDivided(Number n) {
-        return new Number(n._value / _value);
     }
 //endregion
 
