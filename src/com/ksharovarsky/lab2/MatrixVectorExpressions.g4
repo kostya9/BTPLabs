@@ -1,7 +1,7 @@
 grammar MatrixVectorExpressions;
 
 //start_rule: (operation end_expression)* operation?;
-start_rule: operation end_expression*;
+start_rule: operation end_expression* EOF;
 end_expression: ';';
 
 assignment: NAME '=' operation;

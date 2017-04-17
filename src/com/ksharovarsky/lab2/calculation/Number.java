@@ -1,8 +1,5 @@
 package com.ksharovarsky.lab2.calculation;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import sun.reflect.generics.tree.DoubleSignature;
-
 /**
  * Created by kostya on 4/10/2017.
  */
@@ -18,58 +15,90 @@ public class Number extends Expression {
         return String.format("%.2f", _value);
     }
 
+    //region Expression
+    @Override
     public Expression plus(Expression e) {
-        if(e instanceof Number)
-        {
-            Number n = (Number)e;
-            return new Number(_value + n._value);
-        }
-        throw new NotImplementedException();
+        return e.plus(this);
     }
 
+    @Override
     public Expression minus(Expression e) {
-        if(e instanceof Number)
-        {
-            Number n = (Number)e;
-            return new Number(_value - n._value);
-        }
-        throw new NotImplementedException();
+        return e.negative().plus(this);
     }
 
+    @Override
     public Expression multiply(Expression e) {
-        if(e instanceof Number)
-        {
-            Number n = (Number)e;
-            return new Number(_value * n._value);
-        }
-        throw new NotImplementedException();
+        return e.beMultiplied(this);
     }
 
+    @Override
     public Expression divide(Expression e) {
-        if(e instanceof Number)
-        {
-            Number n = (Number)e;
-            return new Number(_value / n._value);
-        }
-        throw new NotImplementedException();
+        return e.beDivided(this);
+    }
+//endregion
+
+    //region Number
+    @Override
+    public Number plus(Number n) {
+        return new Number(n._value + _value);
     }
 
+    @Override
+    public Number multiply(Number n) {
+        return new Number(n._value * _value);
+    }
+
+    @Override
+    public Expression beMultiplied(Number n) {
+        return this.multiply(n);
+    }
+    //endregion
+
+    //region Vector
+    @Override
+    public Expression beMultiplied(Vector v) {
+        return v.multiply(this);
+    }
+    @Override
+    public Expression beDivided(Vector v) {
+        return v.multiply(this.inverse());
+    }
+    //endregion
+
+    //region Matrix
+    @Override
+    public Expression beMultiplied(Matrix m) {
+        return m.multiply(this);
+    }
+
+    @Override
+    public Expression beDivided(Number n) {
+        return new Number(n._value / _value);
+    }
+//endregion
+
+    //region unar
+    @Override
     public Expression transpose() {
         return this;
     }
 
+    @Override
     public Expression inverse() {
         return new Number(1 / _value);
     }
 
+    @Override
     public Expression rank() {
         return new Number(1);
     }
 
+    @Override
     public Expression determinant() {
         return this;
     };
 
+    @Override
     public Expression negative() {
 
         return new Number(- _value);
@@ -91,4 +120,12 @@ public class Number extends Expression {
         long temp = Double.doubleToLongBits(_value);
         return (int) (temp ^ (temp >>> 32));
     }
+
+    //endregion
+
+    public double getValue() {
+        return _value;
+    }
+
+
 }

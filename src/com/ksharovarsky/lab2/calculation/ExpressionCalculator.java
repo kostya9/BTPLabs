@@ -5,6 +5,7 @@ import com.ksharovarsky.lab2.MatrixVectorExpressionsParser;
 import org.antlr.v4.runtime.*;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,15 +50,14 @@ public class ExpressionCalculator {
 
     public String calculateOutput(String input) {
         try {
-
-            Expression e = calculate(input);
+            Expression e = calculate(input.replaceAll(" ", ""));
             return e.display();
         }
         catch(IllegalArgumentException e) {
             return e.getMessage();
         }
         catch (NotImplementedException e){
-            return "Sorry, this operation was not implemented";
+            return "Sorry, this operation was not implemented"  + Arrays.toString(e.getStackTrace());
         }
         catch(Exception e) {
             return "Incorrect input. Try again.";
