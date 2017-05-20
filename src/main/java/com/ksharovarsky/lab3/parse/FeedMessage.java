@@ -9,8 +9,20 @@ import java.util.stream.Collectors;
  * Created by kostya on 5/14/2017.
  */
 public class FeedMessage {
+    private int id;
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     private String title;
     private String description;
+
+    private FeedMessage() {}
 
     public FeedMessage(String title, String description) {
         this.title = title;
@@ -85,5 +97,13 @@ public class FeedMessage {
                         Map.Entry<String, WordFrequency>::getValue,
                         (e1, e2) -> e1,
                         LinkedHashMap::new));
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

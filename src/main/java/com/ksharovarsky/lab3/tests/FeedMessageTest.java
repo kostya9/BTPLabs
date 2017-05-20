@@ -19,7 +19,7 @@ public class FeedMessageTest {
 
     @Before
     public void initFeedMessage() {
-        message = new FeedMessage("title some", "some words for some description title");
+        message = new FeedMessage("title some", "some words for some, description title!");
     }
 
     @Test

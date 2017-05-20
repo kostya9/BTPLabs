@@ -23,6 +23,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="gov.nist.math:jama:1.0.3" level="project" />
+    <orderEntry type="library" name="Maven: com.microsoft.sqlserver:mssql-jdbc:6.1.7.jre8-preview" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-core:5.2.10.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.3.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final" level="project" />
@@ -45,5 +46,15 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.0.0-M2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.opentest4j:opentest4j:1.0.0-M1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.0.0-M2" level="project" />
+    <orderEntry type="module-library">
+      <library name="sql_uath">
+        <CLASSES />
+        <JAVADOC />
+        <NATIVE>
+          <root url="file://$MODULE_DIR$/src/main/resources/auth/x64" />
+        </NATIVE>
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

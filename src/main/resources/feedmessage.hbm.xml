@@ -1,0 +1,12 @@
+<hibernate-mapping>
+    <class name="com.ksharovarsky.lab3.parse.FeedMessage" table="Messages">
+        <meta attribute="class-description">
+            This class contains the feed message detail.
+        </meta>
+        <id name="id" type="int" column="Id">
+            <generator class="native"/>
+        </id>
+        <property name="title" column="Title" type="string"/>
+        <property name="description" column="Description" type="string"/>
+    </class>
+</hibernate-mapping>
