@@ -3,10 +3,10 @@
         <meta attribute="class-description">
             This class contains the feed message detail.
         </meta>
-        <id name="id" type="int" column="Id">
-            <generator class="native"/>
+        <id name="id" type="string" column="Id">
         </id>
         <property name="title" column="Title" type="string"/>
         <property name="description" column="Description" type="string"/>
+        <property name="pubDate" column="Date" type="date"/>
     </class>
 </hibernate-mapping>

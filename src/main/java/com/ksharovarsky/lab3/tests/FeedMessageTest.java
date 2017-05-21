@@ -5,6 +5,7 @@ import com.ksharovarsky.lab3.parse.WordFrequency;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ public class FeedMessageTest {
 
     @Before
     public void initFeedMessage() {
-        message = new FeedMessage("title some", "some words for some, description title!");
+        message = new FeedMessage("id", "title some", "some words for some, description title!", new Date());
     }
 
     @Test

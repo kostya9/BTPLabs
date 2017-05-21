@@ -1,0 +1,12 @@
+<hibernate-mapping>
+    <class name="com.ksharovarsky.lab3.model.RssChannel" table="RssChannels">
+        <meta attribute="class-description">
+            This class contains the rss channel.
+        </meta>
+        <id name="id" type="int" column="Id">
+            <generator class="native"/>
+        </id>
+        <property name="name" column="Name" type="string"/>
+        <property name="url" column="Url" type="string"/>
+    </class>
+</hibernate-mapping>

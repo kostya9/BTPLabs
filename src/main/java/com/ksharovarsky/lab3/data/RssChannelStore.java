@@ -1,68 +1,77 @@
 package com.ksharovarsky.lab3.data;
 
 import com.google.inject.Inject;
-import com.ksharovarsky.lab3.parse.FeedMessage;
+import com.ksharovarsky.lab3.model.RssChannel;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import java.util.List;
 
 /**
- * Created by kostya on 5/20/2017.
+ * Created by kostya on 5/21/2017.
  */
-public class FeedMessageStore implements IFeedMessageStore{
+public class RssChannelStore implements IRssChannelStore {
     private SessionFactory factory;
 
     @Inject
-    public FeedMessageStore(SessionFactory factory) {
+    public RssChannelStore(SessionFactory factory) {
+
         this.factory = factory;
     }
 
-    public void addFeedMessage(FeedMessage message) {
-        Session session = factory.openSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            session.save(message);
-            transaction.commit();
-        }
-        catch (HibernateException e) {
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-    }
-
     @Override
-    public void removeFeedMessage(String id) {
+    public List<RssChannel> getAllRssChannels() {
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
-        try{
-            FeedMessage message = (FeedMessage) session.get(FeedMessage.class, id);
-            session.remove(message);
+        List<RssChannel> channels = null;
+        try {
+            Query query = session.createQuery("from RssChannel");
+            channels = query.list();
             transaction.commit();
-        }
-        catch(HibernateException e) {
+        } catch (HibernateException e) {
             transaction.rollback();
             e.printStackTrace();
         }
 
         session.close();
+        return channels;
     }
 
     @Override
-    public FeedMessage getFeedMessage(String id) {
+    public int addRssChannel(RssChannel channel) {
         Session session = factory.openSession();
-        FeedMessage message = null;
         Transaction transaction = session.beginTransaction();
-        try{
-            message = session.get(FeedMessage.class, id);
+        int id = 0;
+        try {
+            id = (int)session.save(channel);
             transaction.commit();
         }
-        catch(HibernateException e) {
+        catch (HibernateException e) {
+            transaction.rollback();
             e.printStackTrace();
         }
 
         session.close();
-        return message;
+        return id;
+    }
+
+    @Override
+    public void removeRssChannel(int id) {
+        Session session = factory.openSession();
+        Transaction transaction = session.beginTransaction();
+        try {
+            RssChannel channel = session.get(RssChannel.class, id);
+            session.remove(channel);
+            transaction.commit();
+        }
+        catch (HibernateException e) {
+            transaction.rollback();
+            e.printStackTrace();
+        }
+
+        session.close();
     }
 }

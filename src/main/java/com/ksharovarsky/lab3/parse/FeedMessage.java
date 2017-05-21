@@ -9,7 +9,10 @@ import java.util.stream.Collectors;
  * Created by kostya on 5/14/2017.
  */
 public class FeedMessage {
-    private int id;
+    private String id;
+    private String title;
+    private String description;
+    private Date pubDate;
 
     public void setTitle(String title) {
         this.title = title;
@@ -19,14 +22,13 @@ public class FeedMessage {
         this.description = description;
     }
 
-    private String title;
-    private String description;
-
     private FeedMessage() {}
 
-    public FeedMessage(String title, String description) {
+    public FeedMessage(String id, String title, String description, Date pubDate) {
+        this.id = id;
         this.title = title;
         this.description = description;
+        this.pubDate = pubDate;
     }
 
 
@@ -99,11 +101,19 @@ public class FeedMessage {
                         LinkedHashMap::new));
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public Date getPubDate() {
+        return pubDate;
+    }
+
+    public void setPubDate(Date pubDate) {
+        this.pubDate = pubDate;
     }
 }

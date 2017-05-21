@@ -7,7 +7,7 @@ import com.ksharovarsky.lab3.parse.FeedMessage;
  */
 public interface IFeedMessageStore {
 
-    int addFeedMessage(FeedMessage message);
-    void removeFeedMessage(int id);
-    FeedMessage getFeedMessage(int id);
+    void addFeedMessage(FeedMessage message);
+    void removeFeedMessage(String id);
+    FeedMessage getFeedMessage(String id);
 }
