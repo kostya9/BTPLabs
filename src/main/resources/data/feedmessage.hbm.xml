@@ -1,5 +1,5 @@
 <hibernate-mapping>
-    <class name="com.ksharovarsky.lab3.parse.FeedMessage" table="Messages">
+    <class name="com.ksharovarsky.lab3.feed.FeedMessage" table="Messages">
         <meta attribute="class-description">
             This class contains the feed message detail.
         </meta>

@@ -1,7 +1,7 @@
 package com.ksharovarsky.lab3.data;
 
 import com.google.inject.Inject;
-import com.ksharovarsky.lab3.parse.FeedMessage;
+import com.ksharovarsky.lab3.feed.FeedMessage;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

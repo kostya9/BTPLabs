@@ -5,6 +5,7 @@ package com.ksharovarsky.lab3.ui;/**
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,6 +22,11 @@ public class news extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+        Platform.setImplicitExit(true);
+        primaryStage.setOnCloseRequest((ae) -> {
+            Platform.exit();
+            System.exit(0);
+        });
         final Injector injector = Guice.createInjector(new AppInjector());
         String fxml = "/main.fxml";
         FXMLLoader loader = new FXMLLoader();

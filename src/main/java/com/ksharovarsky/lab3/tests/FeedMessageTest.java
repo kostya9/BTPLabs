@@ -1,7 +1,7 @@
 package com.ksharovarsky.lab3.tests;
 
-import com.ksharovarsky.lab3.parse.FeedMessage;
-import com.ksharovarsky.lab3.parse.WordFrequency;
+import com.ksharovarsky.lab3.feed.FeedMessage;
+import com.ksharovarsky.lab3.feed.WordFrequency;
 import org.junit.Before;
 import org.junit.Test;
 

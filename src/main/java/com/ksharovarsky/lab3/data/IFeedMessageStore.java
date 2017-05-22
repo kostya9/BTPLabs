@@ -1,6 +1,6 @@
 package com.ksharovarsky.lab3.data;
 
-import com.ksharovarsky.lab3.parse.FeedMessage;
+import com.ksharovarsky.lab3.feed.FeedMessage;
 
 /**
  * Created by kostya on 5/20/2017.

@@ -2,6 +2,7 @@ package com.ksharovarsky.lab3.ui;
 
 import com.google.inject.Inject;
 import com.ksharovarsky.lab3.data.IRssChannelStore;
+import com.ksharovarsky.lab3.feed.WebRssFeed;
 import com.ksharovarsky.lab3.model.RssChannel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,7 +47,6 @@ public class RssChannelsTabController {
             public TableCell<RssChannel, String> call(TableColumn<RssChannel, String> param) {
                 final TableCell<RssChannel, String> cell = new TableCell<RssChannel, String>()
                 {
-
                     final Button btn = new Button( "Remove" );
 
                     @Override
@@ -88,6 +88,14 @@ public class RssChannelsTabController {
             public void handle(MouseEvent event) {
                 RssChannel channel;
                 try {
+                    WebRssFeed feed = new WebRssFeed(urlField.getText());
+                    if(!feed.IsValid()){
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "This url does not contain valid RSS!", ButtonType.OK);
+                        alert.setHeaderText(null);
+                        alert.setTitle("Invalid URL");
+                        alert.showAndWait();
+                        return;
+                    }
                     channel = new RssChannel(nameField.getText().trim(), urlField.getText().trim());
                     store.addRssChannel(channel);
                 }

@@ -1,4 +1,4 @@
-package com.ksharovarsky.lab3.parse;
+package com.ksharovarsky.lab3.feed;
 
 import java.util.Objects;
 
