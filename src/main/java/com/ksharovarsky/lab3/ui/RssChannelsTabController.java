@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 /**
  * Created by kostya on 5/21/2017.
@@ -64,6 +65,14 @@ public class RssChannelsTabController {
                             {
                                 RssChannel channel = getTableView().getItems().get( getIndex() );
                                 try{
+                                    Alert alert = new Alert(Alert.AlertType.WARNING,
+                                            "Are you sure that you want to delete this channel? All corresponding news will be deleted too.",
+                                            ButtonType.OK, ButtonType.CANCEL);
+                                    alert.setHeaderText(null);
+                                    alert.setTitle("Delete channel");
+                                    Optional<ButtonType> type= alert.showAndWait();
+                                    if(type.get() != ButtonType.OK)
+                                        return;
                                     store.removeRssChannel(channel.getId());
                                 }
                                 catch (Exception e) {
@@ -88,6 +97,14 @@ public class RssChannelsTabController {
             public void handle(MouseEvent event) {
                 RssChannel channel;
                 try {
+                    if(channelsObservableList.stream().anyMatch(obj -> obj.getUrl().toLowerCase().trim().equals(urlField.getText().toLowerCase().trim())))
+                    {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "This url is already used!", ButtonType.OK);
+                        alert.setHeaderText(null);
+                        alert.setTitle("Invalid URL");
+                        alert.showAndWait();
+                        return;
+                    }
                     WebRssFeed feed = new WebRssFeed(urlField.getText());
                     if(!feed.IsValid()){
                         Alert alert = new Alert(Alert.AlertType.ERROR, "This url does not contain valid RSS!", ButtonType.OK);

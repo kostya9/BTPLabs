@@ -2,6 +2,7 @@ package com.ksharovarsky.lab3.tests;
 
 import com.ksharovarsky.lab3.feed.FeedMessage;
 import com.ksharovarsky.lab3.feed.WordFrequency;
+import com.ksharovarsky.lab3.model.RssChannel;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class FeedMessageTest {
 
     @Before
     public void initFeedMessage() {
-        message = new FeedMessage("id", "title some", "some words for some, description title!", new Date());
+        message = new FeedMessage("id", "title some", "some words for some, description title!", new Date(), "", new RssChannel("", ""));
     }
 
     @Test

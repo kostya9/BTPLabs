@@ -9,5 +9,6 @@ public interface IFeedMessageStore {
 
     void addFeedMessage(FeedMessage message);
     void removeFeedMessage(String id);
+    boolean exists(String id);
     FeedMessage getFeedMessage(String id);
 }

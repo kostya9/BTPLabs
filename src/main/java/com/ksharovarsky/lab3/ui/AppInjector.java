@@ -3,8 +3,11 @@ package com.ksharovarsky.lab3.ui;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
+import com.ksharovarsky.lab3.data.FeedMessageStore;
+import com.ksharovarsky.lab3.data.IFeedMessageStore;
 import com.ksharovarsky.lab3.data.IRssChannelStore;
 import com.ksharovarsky.lab3.data.RssChannelStore;
+import com.ksharovarsky.lab3.feed.MultipleRssFeedFetch;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -40,6 +43,9 @@ public class AppInjector extends AbstractModule {
     }
     @Override
     protected void configure() {
+
         bind(IRssChannelStore.class).to(RssChannelStore.class);
+        bind(IFeedMessageStore.class).to(FeedMessageStore.class);
+        bind(MultipleRssFeedFetch.class);
     }
 }

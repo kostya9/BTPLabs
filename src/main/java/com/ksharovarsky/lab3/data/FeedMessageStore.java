@@ -7,6 +7,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 /**
  * Created by kostya on 5/20/2017.
  */
@@ -64,5 +69,25 @@ public class FeedMessageStore implements IFeedMessageStore{
 
         session.close();
         return message;
+    }
+
+    @Override
+    public boolean exists(String id) {
+        try (Session session = factory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Long> query = builder.createQuery(Long.class);
+            Root<FeedMessage> root = query.from(FeedMessage.class);
+            query.select(builder.count(root));
+            query.where(builder.equal(root.get("id"), id));
+            EntityManager manager = session.getEntityManagerFactory().createEntityManager();
+            Long result = manager.createQuery(query).getSingleResult();
+            transaction.commit();
+            return result > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }

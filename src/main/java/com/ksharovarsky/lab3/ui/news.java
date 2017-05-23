@@ -3,12 +3,18 @@ package com.ksharovarsky.lab3.ui;/**
  */
 
 import com.google.inject.Guice;
+import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.ksharovarsky.lab3.feed.MultipleRssFeedFetch;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -19,6 +25,26 @@ public class news extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+    @FXML
+    private Button updateRssButton;
+
+    @FXML
+    public void initialize() {
+        updateRssButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    fetch.fetch();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    @Inject
+    private MultipleRssFeedFetch fetch;
 
     @Override
     public void start(Stage primaryStage) throws IOException {

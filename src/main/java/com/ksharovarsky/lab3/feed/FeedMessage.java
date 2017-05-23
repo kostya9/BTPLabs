@@ -1,5 +1,7 @@
 package com.ksharovarsky.lab3.feed;
 
+import com.ksharovarsky.lab3.model.RssChannel;
+
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,6 +15,8 @@ public class FeedMessage {
     private String title;
     private String description;
     private Date pubDate;
+    private String link;
+    private RssChannel rssChannel;
 
     public void setTitle(String title) {
         this.title = title;
@@ -24,11 +28,13 @@ public class FeedMessage {
 
     private FeedMessage() {}
 
-    public FeedMessage(String id, String title, String description, Date pubDate) {
+    public FeedMessage(String id, String title, String description, Date pubDate, String link, RssChannel rssChannel) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.pubDate = pubDate;
+        this.link = link;
+        this.rssChannel = rssChannel;
     }
 
 
@@ -115,5 +121,21 @@ public class FeedMessage {
 
     public void setPubDate(Date pubDate) {
         this.pubDate = pubDate;
+    }
+
+    public RssChannel getRssChannel() {
+        return rssChannel;
+    }
+
+    public void setRssChannel(RssChannel rssChannel) {
+        this.rssChannel = rssChannel;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }
