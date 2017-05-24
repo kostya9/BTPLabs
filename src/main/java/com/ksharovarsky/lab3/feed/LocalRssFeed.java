@@ -3,15 +3,12 @@ package com.ksharovarsky.lab3.feed;
 import com.google.inject.Inject;
 import com.ksharovarsky.lab3.data.IFeedMessageStore;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by kostya on 5/24/2017.
  */
-public class LocalRssFeed {
+public class LocalRssFeed extends Observable {
     private IFeedMessageStore store;
     private List<FeedMessage> messages = new ArrayList<>();
 
@@ -27,9 +24,20 @@ public class LocalRssFeed {
         this.store = store;
     }
 
+    @Override
+    public void notifyObservers(Object shouldForceWebFetch) {
+        if(shouldForceWebFetch != null && !(shouldForceWebFetch instanceof Boolean))
+            throw new IllegalArgumentException("Argument cannot be not bolean. It represents shouldForceWebFetch");
+        if(shouldForceWebFetch != null && (Boolean) shouldForceWebFetch) {
+            setChanged();
+        }
+        super.notifyObservers(shouldForceWebFetch);
+    }
+
     public void update() {
         store.removeOlderThan(getOldDate());
         messages = store.getAllFeedMessages();
+        setChanged();
     }
 
     public List<FeedMessage> getMessages() {

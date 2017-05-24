@@ -2,6 +2,7 @@ package com.ksharovarsky.lab3.ui;
 
 import com.google.inject.Inject;
 import com.ksharovarsky.lab3.data.IRssChannelStore;
+import com.ksharovarsky.lab3.feed.LocalRssFeed;
 import com.ksharovarsky.lab3.feed.RssChannel;
 import com.ksharovarsky.lab3.feed.WebRssFeed;
 import javafx.collections.FXCollections;
@@ -39,7 +40,7 @@ public class RssChannelsTabController implements Initializable {
     @Inject private IRssChannelStore store;
 
     @Inject
-    EventManager eventManager;
+    private LocalRssFeed feed;
 
     @FXML
     @Override
@@ -87,7 +88,8 @@ public class RssChannelsTabController implements Initializable {
                                     return;
                                 }
 
-                                eventManager.getFeedItemsChanged().notifyObservers();
+                                feed.update();
+                                feed.notifyObservers();
                                 channelsObservableList.remove(channel);
                             } );
                             setGraphic( btn );
@@ -113,8 +115,8 @@ public class RssChannelsTabController implements Initializable {
                         alert.showAndWait();
                         return;
                     }
-                    WebRssFeed feed = new WebRssFeed(urlField.getText());
-                    if(!feed.IsValid()){
+                    WebRssFeed webRssFeed = new WebRssFeed(urlField.getText());
+                    if(!webRssFeed.IsValid()){
                         Alert alert = new Alert(Alert.AlertType.ERROR, "This url does not contain valid RSS!", ButtonType.OK);
                         alert.setHeaderText(null);
                         alert.setTitle("Invalid URL");
@@ -123,6 +125,9 @@ public class RssChannelsTabController implements Initializable {
                     }
                     channel = new RssChannel(nameField.getText().trim(), urlField.getText().trim());
                     store.addRssChannel(channel);
+
+                    boolean shouldForceWebFetch = true;
+                    feed.notifyObservers((Object) shouldForceWebFetch);
                 }
                 catch (Exception e) {
                     System.err.println("Could not add new rss channel");

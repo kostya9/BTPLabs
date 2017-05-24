@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.IOException;
+import java.util.Observable;
 
 public class news extends Application {
 
@@ -33,22 +34,32 @@ public class news extends Application {
     @FXML private NewsTabController newsTabController;
 
     @Inject
-    EventManager eventManager;
-
-    @Inject
     LocalRssFeed feed;
+
+    private void OnFeedMessageChange(Observable obs, Object shouldForceWebFetch) {
+        if(shouldForceWebFetch instanceof Boolean && (Boolean) shouldForceWebFetch) {
+            try {
+                fetch.fetch();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            feed.update();
+            feed.notifyObservers();
+        }
+    }
 
     @FXML
     public void initialize() {
+        feed.addObserver(this::OnFeedMessageChange);
         feed.update();
-        eventManager.getFeedItemsChanged().notifyObservers();
+        feed.notifyObservers();
         updateRssButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 try {
                     fetch.fetch();
                     feed.update();
-                    eventManager.getFeedItemsChanged().notifyObservers();
+                    feed.notifyObservers();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -79,6 +90,5 @@ public class news extends Application {
         primaryStage.setTitle("RSS feed viewer");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-
     }
 }

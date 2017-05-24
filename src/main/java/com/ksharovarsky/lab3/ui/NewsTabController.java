@@ -56,9 +56,6 @@ public class NewsTabController implements Initializable {
     private ObservableList<FeedMessage> messageObservableList = FXCollections.observableList(new ArrayList<>());
 
     @Inject
-    private EventManager eventManager;
-
-    @Inject
     private LocalRssFeed feed;
 
     public void OnSelectionChanged() {
@@ -115,7 +112,7 @@ public class NewsTabController implements Initializable {
         });
 
         OnFeedMessagesChange();
-        eventManager.getFeedItemsChanged().addObserver((Observable o, Object arg) -> OnFeedMessagesChange());
+        feed.addObserver((Observable o, Object arg) -> OnFeedMessagesChange());
 
         feedMessagesList.setCellFactory(new Callback<ListView<FeedMessage>, ListCell<FeedMessage>>() {
             @Override
