@@ -7,6 +7,7 @@ import com.ksharovarsky.lab3.data.FeedMessageStore;
 import com.ksharovarsky.lab3.data.IFeedMessageStore;
 import com.ksharovarsky.lab3.data.IRssChannelStore;
 import com.ksharovarsky.lab3.data.RssChannelStore;
+import com.ksharovarsky.lab3.feed.LocalRssFeed;
 import com.ksharovarsky.lab3.feed.MultipleRssFeedFetch;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -49,9 +50,10 @@ public class AppInjector extends AbstractModule {
     EventManager provideEventManager() {
         return eventManager;
     }
+
     @Override
     protected void configure() {
-
+        bind(LocalRssFeed.class).asEagerSingleton();
         bind(IRssChannelStore.class).to(RssChannelStore.class);
         bind(IFeedMessageStore.class).to(FeedMessageStore.class);
         bind(MultipleRssFeedFetch.class);

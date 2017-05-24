@@ -5,7 +5,7 @@ package com.ksharovarsky.lab3.ui;/**
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.ksharovarsky.lab3.data.IFeedMessageStore;
+import com.ksharovarsky.lab3.feed.LocalRssFeed;
 import com.ksharovarsky.lab3.feed.MultipleRssFeedFetch;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.IOException;
-import java.util.Calendar;
 
 public class news extends Application {
 
@@ -37,19 +36,18 @@ public class news extends Application {
     EventManager eventManager;
 
     @Inject
-    IFeedMessageStore store;
+    LocalRssFeed feed;
 
     @FXML
     public void initialize() {
+        feed.update();
+        eventManager.getFeedItemsChanged().notifyObservers();
         updateRssButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 try {
                     fetch.fetch();
-                    Calendar oldCalendar = Calendar.getInstance();
-                    final int daysToDeprecate = 3;
-                    oldCalendar.add(Calendar.DAY_OF_MONTH, -daysToDeprecate);
-                    store.removeOlderThan(oldCalendar.getTime());
+                    feed.update();
                     eventManager.getFeedItemsChanged().notifyObservers();
                 } catch (Exception e) {
                     e.printStackTrace();

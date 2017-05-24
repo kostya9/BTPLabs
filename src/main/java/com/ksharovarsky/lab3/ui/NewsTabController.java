@@ -1,8 +1,8 @@
 package com.ksharovarsky.lab3.ui;
 
 import com.google.inject.Inject;
-import com.ksharovarsky.lab3.data.IFeedMessageStore;
 import com.ksharovarsky.lab3.feed.FeedMessage;
+import com.ksharovarsky.lab3.feed.LocalRssFeed;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -59,7 +59,7 @@ public class NewsTabController implements Initializable {
     private EventManager eventManager;
 
     @Inject
-    private IFeedMessageStore feedMessageStore;
+    private LocalRssFeed feed;
 
     public void OnSelectionChanged() {
         FeedMessage selected = feedMessagesList.getSelectionModel().getSelectedItem();
@@ -74,11 +74,12 @@ public class NewsTabController implements Initializable {
 
     public void OnFeedMessagesChange() {
         messageObservableList = FXCollections.observableList(new ArrayList<>());
-        messageObservableList.addAll(feedMessageStore.getAllFeedMessages());
+        messageObservableList.addAll(feed.getMessages());
         feedMessagesList.setItems(messageObservableList);
         if(!messageObservableList.stream().findAny().isPresent())
             newsPane.visibleProperty().setValue(false);
         else {
+            newsPane.visibleProperty().setValue(true);
             feedMessagesList.getSelectionModel().select(0);
         }
 
