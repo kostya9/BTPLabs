@@ -1,7 +1,7 @@
 package com.ksharovarsky.lab3.data;
 
 import com.google.inject.Inject;
-import com.ksharovarsky.lab3.model.RssChannel;
+import com.ksharovarsky.lab3.feed.RssChannel;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

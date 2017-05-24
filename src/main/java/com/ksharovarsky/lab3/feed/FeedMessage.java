@@ -1,7 +1,5 @@
 package com.ksharovarsky.lab3.feed;
 
-import com.ksharovarsky.lab3.model.RssChannel;
-
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,7 +24,9 @@ public class FeedMessage {
         this.description = description;
     }
 
-    private FeedMessage() {}
+    public FeedMessage() {
+
+    }
 
     public FeedMessage(String id, String title, String description, Date pubDate, String link, RssChannel rssChannel) {
         this.id = id;

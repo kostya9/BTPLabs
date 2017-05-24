@@ -6,17 +6,22 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by kostya on 5/20/2017.
  */
 public class FeedMessageStore implements IFeedMessageStore{
     private SessionFactory factory;
+
 
     @Inject
     public FeedMessageStore(SessionFactory factory) {
@@ -72,6 +77,24 @@ public class FeedMessageStore implements IFeedMessageStore{
     }
 
     @Override
+    public List<FeedMessage> getAllFeedMessages() {
+        Session session = factory.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<FeedMessage> messages = null;
+        try {
+            Query query = session.createQuery("from FeedMessage");
+            messages = query.list();
+            transaction.commit();
+        } catch (HibernateException e) {
+            transaction.rollback();
+            e.printStackTrace();
+        }
+
+        session.close();
+        return messages;
+    }
+
+    @Override
     public boolean exists(String id) {
         try (Session session = factory.openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -89,5 +112,24 @@ public class FeedMessageStore implements IFeedMessageStore{
         }
 
         return false;
+    }
+
+    @Override
+    public int removeOlderThan(Date date) {
+        try (Session session = factory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaDelete<FeedMessage> query = builder.createCriteriaDelete(FeedMessage.class);
+            Root<FeedMessage> root = query.from(FeedMessage.class);
+            query.where(builder.lessThan(root.get("pubDate"), date));
+            EntityManager manager = session.getEntityManagerFactory().createEntityManager();
+            int result = manager.createQuery(query).executeUpdate();
+            transaction.commit();
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 }

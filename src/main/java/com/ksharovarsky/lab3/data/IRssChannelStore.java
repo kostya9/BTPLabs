@@ -1,6 +1,6 @@
 package com.ksharovarsky.lab3.data;
 
-import com.ksharovarsky.lab3.model.RssChannel;
+import com.ksharovarsky.lab3.feed.RssChannel;
 
 import java.util.List;
 

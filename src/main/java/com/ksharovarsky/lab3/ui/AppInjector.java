@@ -20,7 +20,9 @@ import org.hibernate.cfg.Configuration;
 public class AppInjector extends AbstractModule {
 
     private SessionFactory factory;
+    private EventManager eventManager;
     public AppInjector() {
+        eventManager = new EventManager();
         StandardServiceRegistry registry = null;
         try {
             Configuration configuration = new Configuration();
@@ -40,6 +42,12 @@ public class AppInjector extends AbstractModule {
     @Singleton
     SessionFactory provideMyConfiguration() {
         return factory;
+    }
+
+    @Provides
+    @Singleton
+    EventManager provideEventManager() {
+        return eventManager;
     }
     @Override
     protected void configure() {

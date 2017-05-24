@@ -2,7 +2,7 @@ package com.ksharovarsky.lab3.tests;
 
 import com.ksharovarsky.lab3.feed.FeedMessage;
 import com.ksharovarsky.lab3.feed.WordFrequency;
-import com.ksharovarsky.lab3.model.RssChannel;
+import com.ksharovarsky.lab3.feed.RssChannel;
 import org.junit.Before;
 import org.junit.Test;
 

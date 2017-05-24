@@ -1,5 +1,5 @@
 <hibernate-mapping>
-    <class name="com.ksharovarsky.lab3.model.RssChannel" table="RssChannels">
+    <class name="com.ksharovarsky.lab3.feed.RssChannel" table="RssChannels">
         <meta attribute="class-description">
             This class contains the rss channel.
         </meta>

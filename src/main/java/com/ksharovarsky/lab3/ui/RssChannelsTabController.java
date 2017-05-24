@@ -2,26 +2,29 @@ package com.ksharovarsky.lab3.ui;
 
 import com.google.inject.Inject;
 import com.ksharovarsky.lab3.data.IRssChannelStore;
+import com.ksharovarsky.lab3.feed.RssChannel;
 import com.ksharovarsky.lab3.feed.WebRssFeed;
-import com.ksharovarsky.lab3.model.RssChannel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 /**
  * Created by kostya on 5/21/2017.
  */
-public class RssChannelsTabController {
+public class RssChannelsTabController implements Initializable {
     @FXML private TextField nameField;
     @FXML private TextField urlField;
     @FXML private Button addButton;
@@ -35,8 +38,12 @@ public class RssChannelsTabController {
 
     @Inject private IRssChannelStore store;
 
+    @Inject
+    EventManager eventManager;
+
     @FXML
-    public void initialize() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         nameTableColumn.setCellValueFactory(new PropertyValueFactory<RssChannel, String>("name"));
         urlTableColumn.setCellValueFactory(new PropertyValueFactory<RssChannel, String>("url"));
 
@@ -76,10 +83,11 @@ public class RssChannelsTabController {
                                     store.removeRssChannel(channel.getId());
                                 }
                                 catch (Exception e) {
-                                    System.err.println(String.format("Could not delete person with id %s", channel.getId()));
+                                    System.err.println(String.format("Could not delete channel with id %s", channel.getId()));
                                     return;
                                 }
 
+                                eventManager.getFeedItemsChanged().notifyObservers();
                                 channelsObservableList.remove(channel);
                             } );
                             setGraphic( btn );

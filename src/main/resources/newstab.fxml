@@ -1,0 +1,31 @@
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ksharovarsky.lab3.ui.NewsTabController">
+    <top>
+        <HBox>
+
+        </HBox>
+    </top>
+    <left>
+        <ListView fx:id="feedMessagesList">
+        </ListView>
+    </left>
+    <center>
+        <GridPane vgap="7" style="-fx-padding: 20px;" fx:id="newsPane" alignment="CENTER">
+            <children>
+                <Label wrapText="true" GridPane.rowIndex="1" fx:id="titleText" textAlignment="CENTER" style="-fx-font-weight: bold; -fx-fontsize: 20;"  GridPane.hgrow="ALWAYS" GridPane.halignment="CENTER" GridPane.vgrow="ALWAYS"/>
+                <Label wrapText="true" GridPane.rowIndex="4" fx:id="descriptionText" style="-fx-fontsize: 18;"  GridPane.hgrow="ALWAYS" GridPane.halignment="CENTER"/>
+                <Button fx:id="articleButton" GridPane.rowIndex="7" GridPane.hgrow="ALWAYS" GridPane.halignment="CENTER"> Go To Article </Button>
+                <Label wrapText="true" GridPane.rowIndex="10" style="-fx-font-weight: bold;-fx-fontsize: 12;"  GridPane.hgrow="ALWAYS" GridPane.halignment="CENTER">Channel</Label>
+                <Label wrapText="true" GridPane.rowIndex="11" fx:id="feedText" style="-fx-fontsize: 12;"  GridPane.hgrow="ALWAYS" GridPane.halignment="CENTER"/>
+                <Label wrapText="true" GridPane.rowIndex="12" style="-fx-font-weight: bold;-fx-fontsize: 12;"  GridPane.hgrow="ALWAYS" GridPane.halignment="CENTER">Publish date</Label>
+                <Label wrapText="true" GridPane.rowIndex="13" fx:id="dateText" style="-fx-fontsize: 12;"  GridPane.hgrow="ALWAYS" GridPane.halignment="CENTER"/>
+            </children>
+        </GridPane>
+    </center>
+</BorderPane>

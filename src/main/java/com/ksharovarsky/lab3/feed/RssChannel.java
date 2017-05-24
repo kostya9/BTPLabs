@@ -1,4 +1,4 @@
-package com.ksharovarsky.lab3.model;
+package com.ksharovarsky.lab3.feed;
 
 /**
  * Created by kostya on 5/21/2017.
@@ -8,7 +8,7 @@ public class RssChannel {
     private String url;
     private int id;
 
-    private RssChannel() {
+    public RssChannel() {
 
     }
 

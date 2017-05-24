@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.ksharovarsky.lab3.data.IFeedMessageStore;
 import com.ksharovarsky.lab3.data.IRssChannelStore;
 import com.ksharovarsky.lab3.model.RSS;
-import com.ksharovarsky.lab3.model.RssChannel;
 
 import java.text.DateFormat;
 import java.text.ParseException;

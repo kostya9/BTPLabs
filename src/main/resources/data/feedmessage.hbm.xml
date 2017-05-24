@@ -9,7 +9,7 @@
         <property name="description" column="Description" type="string"/>
         <property name="link" column="Link" type="string"/>
         <property name="pubDate" column="Date" type="date"/>
-        <many-to-one name="RssChannel" class="com.ksharovarsky.lab3.model.RssChannel"
+        <many-to-one name="RssChannel" class="com.ksharovarsky.lab3.feed.RssChannel"
                      column="ChannelId" not-null="true"
                      cascade="delete" />
     </class>
