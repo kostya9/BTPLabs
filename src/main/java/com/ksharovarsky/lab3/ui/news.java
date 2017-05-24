@@ -76,7 +76,7 @@ public class news extends Application {
             }
         });
         Parent root = (Parent) loader.load(getClass().getResourceAsStream(fxml));
-        primaryStage.setTitle("LOL");
+        primaryStage.setTitle("RSS feed viewer");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
 
