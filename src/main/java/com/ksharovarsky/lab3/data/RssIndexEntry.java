@@ -8,13 +8,13 @@ import com.ksharovarsky.lab3.feed.FeedMessage;
 public class RssIndexEntry {
     private int id;
     private String word;
-    private long frequency;
+    private int frequency;
     private FeedMessage feedMessage;
 
     public RssIndexEntry() {
 
     }
-    public RssIndexEntry(String word, long frequency, FeedMessage message) {
+    public RssIndexEntry(String word, int frequency, FeedMessage message) {
         this.word = word;
         this.frequency = frequency;
         this.feedMessage = message;
@@ -36,11 +36,11 @@ public class RssIndexEntry {
         this.word = word;
     }
 
-    public long getFrequency() {
+    public int getFrequency() {
         return frequency;
     }
 
-    public void setFrequency(long frequency) {
+    public void setFrequency(int frequency) {
         this.frequency = frequency;
     }
 

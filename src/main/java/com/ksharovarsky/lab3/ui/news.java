@@ -61,6 +61,7 @@ public class news extends Application {
                 try {
                     fetch.fetch();
                     feed.update();
+                    feed.updateIndex();
                     feed.notifyObservers();
                 } catch (Exception e) {
                     e.printStackTrace();

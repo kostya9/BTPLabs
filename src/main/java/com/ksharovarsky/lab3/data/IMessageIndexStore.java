@@ -10,5 +10,5 @@ import java.util.Map;
  */
 public interface IMessageIndexStore {
     void updateIndex(FeedMessage message, Map<String, Long> frequencies);
-    List<Integer> getIndexForWord(String word);
+    List<String> getIndexForWord(String word);
 }

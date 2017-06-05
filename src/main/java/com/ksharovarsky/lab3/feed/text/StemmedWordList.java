@@ -5,11 +5,14 @@ import org.tartarus.snowball.SnowballStemmer;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * Created by kostya on 5/29/2017.
  */
 public class StemmedWordList extends ArrayList<String> {
+    public static final String STRING_SPLIT_REGEX = "[ ,!\\.\\?:\"\'-]";
 
     private SnowballStemmer stemmer;
 
@@ -22,7 +25,7 @@ public class StemmedWordList extends ArrayList<String> {
         StemmerCreator creator = new StemmerCreator();
         stemmer = creator.getStemmer(text);
 
-        String[] words = text.split("[ ,!\\.\\?]");
+        String[] words = Stream.of(text.split(STRING_SPLIT_REGEX)).map(String::trim).filter(s -> s != null && !Objects.equals(s, "")).toArray(String[]::new);
         Collections.addAll(this, words);
     }
 

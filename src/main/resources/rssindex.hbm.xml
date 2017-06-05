@@ -6,8 +6,8 @@
         <id name="id" type="int" column="Id">
             <generator class="native"/>
         </id>
-        <property name="word" column="Word" type="string"/>
-        <property name="frequency" column="Frequency" type="int"/>
+        <property name="word" column="Word" type="nstring" index="WORD_FREQUENCY_IDX"/>
+        <property name="frequency" column="Frequency" type="int" index="WORD_FREQUENCY_IDX"/>
         <many-to-one name="FeedMessage" class="com.ksharovarsky.lab3.feed.FeedMessage"
                      column="FeedMessageId" cascade="delete"/>
     </class>

@@ -1,5 +1,6 @@
 package com.ksharovarsky.lab3.feed.text;
 
+import com.google.inject.Inject;
 import com.ksharovarsky.lab3.data.IMessageIndexStore;
 import com.ksharovarsky.lab3.feed.FeedMessage;
 import org.tartarus.snowball.SnowballStemmer;
@@ -15,6 +16,7 @@ public class Index {
     private StopWordFilter filter;
     private IMessageIndexStore store;
 
+    @Inject
     public Index(StopWordFilter filter, IMessageIndexStore store) {
         this.filter = filter;
         this.store = store;
@@ -28,16 +30,19 @@ public class Index {
         store.updateIndex(message, wordsFrequencies);
     }
 
-    public List<Integer> getTopTenFeedMessageIds(String word) {
+    public List<String> getTopTenFeedMessageIds(String word) {
         if(filter.contains(word))
             return null;
 
-        List<Integer> indexes;
+        List<String> indexes;
         StemmerCreator creator = new StemmerCreator();
         SnowballStemmer stemmer = creator.getStemmer(word);
         stemmer.setCurrent(word);
-        if(stemmer.stem())
+        if(stemmer.stem()) {
             indexes = store.getIndexForWord(stemmer.getCurrent());
+            if(indexes == null || indexes.size() == 0)
+                indexes = store.getIndexForWord(word);
+        }
         else
             indexes = store.getIndexForWord(word);
 

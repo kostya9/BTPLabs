@@ -32,7 +32,7 @@ public class MultipleRssFeedFetch {
             WebRssFeed feed = new WebRssFeed(channel.getUrl());
             RSS rss = feed.Acquire();
             rss.channel.items.stream()
-                    .filter(item -> !messageStore.exists(item.guId))
+                    .filter(item -> !messageStore.exists(item.link))
                     .forEach(item -> {
                         DateFormat format = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
                         Date pubDate = null;
@@ -45,7 +45,7 @@ public class MultipleRssFeedFetch {
                         String description = preprocess.addParagraphs(item.description);
                         description = preprocess.removeXmlTags(description);
                         description = preprocess.decodeHtml(description);
-                        FeedMessage message = new FeedMessage(item.guId, item.title, description, pubDate, item.link, channel);
+                        FeedMessage message = new FeedMessage(item.link, item.title, description, pubDate, item.link, channel);
                         messageStore.addFeedMessage(message);
             });
         }

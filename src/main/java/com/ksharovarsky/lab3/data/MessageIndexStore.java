@@ -1,5 +1,6 @@
 package com.ksharovarsky.lab3.data;
 
+import com.google.inject.Inject;
 import com.ksharovarsky.lab3.feed.FeedMessage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,6 +19,7 @@ public class MessageIndexStore implements IMessageIndexStore{
 
     private SessionFactory factory;
 
+    @Inject
     public MessageIndexStore(SessionFactory factory) {
 
         this.factory = factory;
@@ -36,10 +38,10 @@ public class MessageIndexStore implements IMessageIndexStore{
                     query.select(builder.count(root));
                     query.where(builder.and(
                             builder.equal(root.get("word"), word),
-                            builder.equal(root.get("FeedMessageId"), message.getId())));
-                    Long result = manager.createQuery(query).getSingleResult();
+                            builder.equal(root.get("FeedMessage"), message)));
+                    Long result = (Long)manager.createQuery(query).getSingleResult();
                     if (result == 0) {
-                        manager.persist(new RssIndexEntry(word, frequencies.get(word), message));
+                        manager.persist(new RssIndexEntry(word, (int)(long) frequencies.get(word), message));
                     }
                     manager.getTransaction().commit();
                 }
@@ -51,18 +53,18 @@ public class MessageIndexStore implements IMessageIndexStore{
     }
 
     @Override
-    public List<Integer> getIndexForWord(String word) {
+    public List<String> getIndexForWord(String word) {
         try(Session session = factory.openSession()) {
             EntityManager manager = session.getEntityManagerFactory().createEntityManager();
             manager.getTransaction().begin();
             try {
                 CriteriaBuilder builder = manager.getCriteriaBuilder();
-                CriteriaQuery<Integer> query = builder.createQuery(Integer.class);
+                CriteriaQuery<String> query = builder.createQuery(String.class);
                 Root<RssIndexEntry> root = query.from(RssIndexEntry.class);
-                query.orderBy(builder.desc(root.get("frequency")));
-                query.select(root.get("FeedMessageId"));
-                List<Integer> ids = manager.createQuery(query)
-                                        .setFirstResult(0)
+                query.orderBy(builder.desc(root.get("frequency")))
+                    .select(root.get("FeedMessage").get("id"))
+                    .where(builder.equal(root.get("word"), word));
+                List<String> ids = manager.createQuery(query)
                                         .setMaxResults(10)
                                         .getResultList();
                 manager.getTransaction().commit();

@@ -3,6 +3,7 @@ package com.ksharovarsky.lab3.ui;
 import com.google.inject.Inject;
 import com.ksharovarsky.lab3.feed.FeedMessage;
 import com.ksharovarsky.lab3.feed.LocalRssFeed;
+import com.ksharovarsky.lab3.feed.text.StemmedWordList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -13,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
@@ -32,6 +34,16 @@ import java.util.ResourceBundle;
  * Created by kostya on 5/24/2017.
  */
 public class NewsTabController implements Initializable {
+
+    @FXML
+    public Button resetBtn;
+
+    @FXML
+    public Button searchBtn;
+
+    @FXML
+    public TextField searchTextField;
+
     @FXML
     private Label feedText;
 
@@ -82,11 +94,39 @@ public class NewsTabController implements Initializable {
             feedMessagesList.getSelectionModel().select(0);
         }
 
+
+
     }
 
     @FXML
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        searchBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(searchTextField.getText().split(StemmedWordList.STRING_SPLIT_REGEX).length > 1)
+                {
+                    Alert alert = new Alert(Alert.AlertType.ERROR,
+                            "Can search by one word only",
+                            ButtonType.OK);
+                    alert.setHeaderText("Only one word");
+                    alert.show();
+                    return;
+                }
+
+                feed.search(searchTextField.getText());
+                feed.notifyObservers();
+            }
+        });
+
+        resetBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                feed.reset();
+                feed.notifyObservers();
+                searchTextField.setText("");
+            }
+        });
         articleButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -121,10 +161,12 @@ public class NewsTabController implements Initializable {
             public ListCell<FeedMessage> call(ListView<FeedMessage> param) {
                 return new ListCell<FeedMessage>() {
                     @Override
-                    protected void updateItem(FeedMessage message, boolean bln) {
-                        super.updateItem(message, bln);
-
-                        if(message != null) {
+                    protected void updateItem(FeedMessage message, boolean empty) {
+                        super.updateItem(message, empty);
+                        if(empty) {
+                            setGraphic(null);
+                        }
+                        else if(message != null) {
                             Label  text = new Label(message.getTitle());
                             text.setWrapText(true);
                             text.setPrefWidth(feedMessagesList.getWidth() - 30);

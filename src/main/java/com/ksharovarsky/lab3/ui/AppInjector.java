@@ -3,17 +3,21 @@ package com.ksharovarsky.lab3.ui;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
-import com.ksharovarsky.lab3.data.FeedMessageStore;
-import com.ksharovarsky.lab3.data.IFeedMessageStore;
-import com.ksharovarsky.lab3.data.IRssChannelStore;
-import com.ksharovarsky.lab3.data.RssChannelStore;
+import com.ksharovarsky.lab3.data.*;
 import com.ksharovarsky.lab3.feed.LocalRssFeed;
 import com.ksharovarsky.lab3.feed.MultipleRssFeedFetch;
+import com.ksharovarsky.lab3.feed.text.Index;
+import com.ksharovarsky.lab3.feed.text.StopWordFilter;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.util.ArrayList;
 
 /**
  * Created by kostya on 5/21/2017.
@@ -21,8 +25,15 @@ import org.hibernate.cfg.Configuration;
 public class AppInjector extends AbstractModule {
 
     private SessionFactory factory;
+    private StopWordFilter filter;
     public AppInjector() {
         StandardServiceRegistry registry = null;
+        try {
+            filter = new StopWordFilter(Files.readAllLines(FileSystems.getDefault().getPath("stop-words.txt")));
+        } catch (IOException e) {
+            filter = new StopWordFilter(new ArrayList<String>());
+            System.err.println("Could not load the stop words list");
+        }
         try {
             Configuration configuration = new Configuration();
             configuration.configure();
@@ -43,11 +54,19 @@ public class AppInjector extends AbstractModule {
         return factory;
     }
 
+    @Provides
+    @Singleton
+    StopWordFilter providesStopWords() {
+        return filter;
+    }
+
     @Override
     protected void configure() {
         bind(LocalRssFeed.class).asEagerSingleton();
         bind(IRssChannelStore.class).to(RssChannelStore.class);
         bind(IFeedMessageStore.class).to(FeedMessageStore.class);
         bind(MultipleRssFeedFetch.class);
+        bind(IMessageIndexStore.class).to(MessageIndexStore.class);
+        bind(Index.class);
     }
 }
