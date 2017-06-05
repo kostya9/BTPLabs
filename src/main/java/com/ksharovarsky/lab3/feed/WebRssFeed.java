@@ -3,8 +3,6 @@ package com.ksharovarsky.lab3.feed;
 import com.ksharovarsky.lab3.model.RSS;
 
 import javax.net.ssl.*;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
 import java.net.URL;
 import java.security.cert.X509Certificate;
 
@@ -66,8 +64,7 @@ public class WebRssFeed {
 
     public RSS Acquire() throws Exception{
         URL url = new URL(address);
-        JAXBContext context = JAXBContext.newInstance(RSS.class);
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        return (RSS) unmarshaller.unmarshal(url.openStream());
+        RssXmlParser fetch = new RssXmlParser();
+        return fetch.Acquire(url.openStream());
     }
 }
