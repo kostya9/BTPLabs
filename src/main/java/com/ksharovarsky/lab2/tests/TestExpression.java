@@ -1,6 +1,5 @@
 package com.ksharovarsky.lab2.tests;
 
-import com.ksharovarsky.lab2.calculation.*;
 import com.ksharovarsky.lab2.calculation.Expression;
 import com.ksharovarsky.lab2.calculation.ExpressionCalculator;
 import com.ksharovarsky.lab2.calculation.Number;
@@ -28,7 +27,7 @@ public class TestExpression {
     @Test
     public void testPlusAndMinus() {
         Expression e = _calculator.calculate("1 + 1 + 1 + 1");
-        Expression eMinus = e.minus(new Number(1));
+        Expression eMinus = e.minus((Expression) new Number(1));
 
         assertEquals(e, new Number(4));
         assertEquals(eMinus, new Number(3));
