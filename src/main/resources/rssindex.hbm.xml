@@ -1,0 +1,14 @@
+<hibernate-mapping>
+    <class name="com.ksharovarsky.lab3.data.RssIndexEntry" table="RssIndex">
+        <meta attribute="class-description">
+            This class contains the rss index.
+        </meta>
+        <id name="id" type="int" column="Id">
+            <generator class="native"/>
+        </id>
+        <property name="word" column="Word" type="string"/>
+        <property name="frequency" column="Frequency" type="int"/>
+        <many-to-one name="FeedMessage" class="com.ksharovarsky.lab3.feed.FeedMessage"
+                     column="FeedMessageId" cascade="delete"/>
+    </class>
+</hibernate-mapping>

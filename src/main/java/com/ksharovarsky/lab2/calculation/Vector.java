@@ -68,10 +68,9 @@ public class Vector extends Expression{
         if(v.getDimension() != this.getDimension())
             throw new IllegalArgumentException("Incorrect dimensions.");
 
-        Number result = IntStream.range(0, getDimension())
+        return IntStream.range(0, getDimension())
                 .mapToObj(i -> _numbers[i].multiply(v._numbers[i]))
                 .collect(Collectors.reducing(Number::plus)).get();
-        return result;
     }
 
     public Expression beDivided(Vector v) {
@@ -95,12 +94,12 @@ public class Vector extends Expression{
 
     public Expression determinant() {
         throw new IllegalArgumentException("Cannot find a determinant of a vector");
-    };
+    }
 
     public Expression negative() {
         Number[] numbers = Arrays.stream(_numbers).map(Number::negative).toArray(Number[]::new);
         return new Vector(numbers);
-    };
+    }
     //endregion
 
     @Override

@@ -68,9 +68,9 @@ public abstract class Expression {
 
     public Expression rank() { throw new IllegalArgumentException(); }
 
-    public Expression determinant() { throw new IllegalArgumentException(); };
+    public Expression determinant() { throw new IllegalArgumentException(); }
 
-    public Expression negative() { throw new IllegalArgumentException(); };
+    public Expression negative() { throw new IllegalArgumentException(); }
     //endregion
 
     public abstract String display();

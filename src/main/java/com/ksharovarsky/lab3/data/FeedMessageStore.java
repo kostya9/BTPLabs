@@ -47,7 +47,7 @@ public class FeedMessageStore implements IFeedMessageStore{
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
         try{
-            FeedMessage message = (FeedMessage) session.get(FeedMessage.class, id);
+            FeedMessage message = session.get(FeedMessage.class, id);
             session.remove(message);
             transaction.commit();
         }
@@ -117,14 +117,15 @@ public class FeedMessageStore implements IFeedMessageStore{
     @Override
     public int removeOlderThan(Date date) {
         try (Session session = factory.openSession()) {
-            Transaction transaction = session.beginTransaction();
             CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaDelete<FeedMessage> query = builder.createCriteriaDelete(FeedMessage.class);
             Root<FeedMessage> root = query.from(FeedMessage.class);
             query.where(builder.lessThan(root.get("pubDate"), date));
             EntityManager manager = session.getEntityManagerFactory().createEntityManager();
+            manager.getTransaction().begin();
             int result = manager.createQuery(query).executeUpdate();
-            transaction.commit();
+            manager.getTransaction().commit();
+
             return result;
         } catch (Exception e) {
             e.printStackTrace();

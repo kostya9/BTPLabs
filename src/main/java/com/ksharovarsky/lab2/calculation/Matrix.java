@@ -128,13 +128,13 @@ public class Matrix extends Expression{
         }
 
         return new Number(result);
-    };
+    }
 
     public Expression negative() {
         Vector[] vectors = Arrays.stream(this._vectors).map(Vector::negative).toArray(Vector[]::new);
 
         return new Matrix(vectors);
-    };
+    }
     //endregion
 
     @Override

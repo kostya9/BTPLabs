@@ -58,8 +58,10 @@ public class NewsTabController implements Initializable {
     @Inject
     private LocalRssFeed feed;
 
-    public void OnSelectionChanged() {
+    private void OnSelectionChanged() {
         FeedMessage selected = feedMessagesList.getSelectionModel().getSelectedItem();
+        if(selected == null)
+            return;
         descriptionText.setText(selected.getDescription());
         titleText.setText(selected.getTitle());
         feedText.setText(selected.getRssChannel().getName());
@@ -69,7 +71,7 @@ public class NewsTabController implements Initializable {
     }
 
 
-    public void OnFeedMessagesChange() {
+    private void OnFeedMessagesChange() {
         messageObservableList = FXCollections.observableList(new ArrayList<>());
         messageObservableList.addAll(feed.getMessages());
         feedMessagesList.setItems(messageObservableList);
@@ -117,7 +119,7 @@ public class NewsTabController implements Initializable {
         feedMessagesList.setCellFactory(new Callback<ListView<FeedMessage>, ListCell<FeedMessage>>() {
             @Override
             public ListCell<FeedMessage> call(ListView<FeedMessage> param) {
-                ListCell<FeedMessage> cell = new ListCell<FeedMessage>() {
+                return new ListCell<FeedMessage>() {
                     @Override
                     protected void updateItem(FeedMessage message, boolean bln) {
                         super.updateItem(message, bln);
@@ -130,8 +132,6 @@ public class NewsTabController implements Initializable {
                         }
                     }
                 };
-
-                return cell;
             }
         });
     }

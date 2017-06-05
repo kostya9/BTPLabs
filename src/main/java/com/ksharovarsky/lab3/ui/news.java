@@ -17,24 +17,26 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.util.Observable;
 
 public class news extends Application {
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
+    @Inject
+    LocalRssFeed feed;
     @FXML
     private Button updateRssButton;
 
-    @FXML private NewsTabController newsTabController;
+    @FXML
+    private NewsTabController newsTabController;
 
     @Inject
-    LocalRssFeed feed;
+    private MultipleRssFeedFetch fetch;
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     private void OnFeedMessageChange(Observable obs, Object shouldForceWebFetch) {
         if(shouldForceWebFetch instanceof Boolean && (Boolean) shouldForceWebFetch) {
@@ -67,9 +69,6 @@ public class news extends Application {
         });
     }
 
-    @Inject
-    private MultipleRssFeedFetch fetch;
-
     @Override
     public void start(Stage primaryStage) throws IOException {
         Platform.setImplicitExit(true);
@@ -80,13 +79,8 @@ public class news extends Application {
         final Injector injector = Guice.createInjector(new AppInjector());
         String fxml = "/main.fxml";
         FXMLLoader loader = new FXMLLoader();
-        loader.setControllerFactory(new Callback<Class<?>, Object>() {
-            @Override
-            public Object call(Class<?> type) {
-                return injector.getInstance(type);
-            }
-        });
-        Parent root = (Parent) loader.load(getClass().getResourceAsStream(fxml));
+        loader.setControllerFactory(type -> injector.getInstance(type));
+        Parent root = loader.load(getClass().getResourceAsStream(fxml));
         primaryStage.setTitle("RSS feed viewer");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

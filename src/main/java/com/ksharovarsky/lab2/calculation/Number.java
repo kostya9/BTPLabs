@@ -99,13 +99,13 @@ public class Number extends Expression {
     @Override
     public Expression determinant() {
         return this;
-    };
+    }
 
     @Override
     public Expression negative() {
 
         return new Number(- _value);
-    };
+    }
 
     @Override
     public boolean equals(Object o) {

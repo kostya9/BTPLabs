@@ -68,7 +68,6 @@ public class WebRssFeed {
         URL url = new URL(address);
         JAXBContext context = JAXBContext.newInstance(RSS.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
-        RSS rss = (RSS) unmarshaller.unmarshal(url.openStream());
-        return rss;
+        return (RSS) unmarshaller.unmarshal(url.openStream());
     }
 }

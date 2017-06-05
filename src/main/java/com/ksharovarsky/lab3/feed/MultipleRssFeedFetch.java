@@ -3,6 +3,7 @@ package com.ksharovarsky.lab3.feed;
 import com.google.inject.Inject;
 import com.ksharovarsky.lab3.data.IFeedMessageStore;
 import com.ksharovarsky.lab3.data.IRssChannelStore;
+import com.ksharovarsky.lab3.feed.text.TextPreprocess;
 import com.ksharovarsky.lab3.model.RSS;
 
 import java.text.DateFormat;
@@ -26,6 +27,7 @@ public class MultipleRssFeedFetch {
 
     public void fetch() throws Exception{
         List<RssChannel> channels = channelStore.getAllRssChannels();
+        TextPreprocess preprocess = new TextPreprocess();
         for (RssChannel channel: channels) {
             WebRssFeed feed = new WebRssFeed(channel.getUrl());
             RSS rss = feed.Acquire();
@@ -40,7 +42,10 @@ public class MultipleRssFeedFetch {
                             e.printStackTrace();
                             return;
                         }
-                        FeedMessage message = new FeedMessage(item.guId, item.title, item.description, pubDate, item.link, channel);
+                        String description = preprocess.addParagraphs(item.description);
+                        description = preprocess.removeXmlTags(description);
+                        description = preprocess.decodeHtml(description);
+                        FeedMessage message = new FeedMessage(item.guId, item.title, description, pubDate, item.link, channel);
                         messageStore.addFeedMessage(message);
             });
         }

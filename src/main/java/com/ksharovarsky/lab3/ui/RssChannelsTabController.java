@@ -127,7 +127,7 @@ public class RssChannelsTabController implements Initializable {
                     store.addRssChannel(channel);
 
                     boolean shouldForceWebFetch = true;
-                    feed.notifyObservers((Object) shouldForceWebFetch);
+                    feed.notifyObservers(shouldForceWebFetch);
                 }
                 catch (Exception e) {
                     System.err.println("Could not add new rss channel");

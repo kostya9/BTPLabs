@@ -27,6 +27,7 @@
         <!-- List of XML mapping files -->
         <mapping resource="feedmessage.hbm.xml"/>
         <mapping resource="rsschannel.hbm.xml"/>
+        <mapping resource="rssindex.hbm.xml"/>
 
     </session-factory>
 </hibernate-configuration>

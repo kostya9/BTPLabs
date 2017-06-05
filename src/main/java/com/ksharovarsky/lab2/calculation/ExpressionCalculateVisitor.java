@@ -39,7 +39,7 @@ public class ExpressionCalculateVisitor extends MatrixVectorExpressionsBaseVisit
 
     @Override public Expression visitMatrix(MatrixVectorExpressionsParser.MatrixContext ctx) {
         List<Vector> list = ctx.vector_sequence().vector().stream().map(v -> (Vector)visitVector(v)).collect(Collectors.toList());
-        Vector[] vectors  = (Vector[]) list.toArray(new Vector[list.size()]);
+        Vector[] vectors  = list.toArray(new Vector[list.size()]);
         return new Matrix(vectors);
     }
 

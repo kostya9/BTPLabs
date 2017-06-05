@@ -26,7 +26,7 @@ public class AppInjector extends AbstractModule {
         try {
             Configuration configuration = new Configuration();
             configuration.configure();
-            registry = new StandardServiceRegistryBuilder().configure("data/hibernate.cfg.xml").build();
+            registry = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
             factory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
         }
         catch (Throwable ex) {
